@@ -1,0 +1,7 @@
+create table comment(
+	comment_id int primary key
+	,story_id int not null
+	,content varchar(1000) not null
+	,nickname varchar(20) not null
+	,regdate datetime default current_timestamp
+);

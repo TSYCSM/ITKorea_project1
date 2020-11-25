@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./common.css">
+        <style>
+
+        /* 글쓰기 영역 */
+        #writeArea{
+            margin: auto;
+            padding-top: 90px;  
+            width: 90%;
+            height: 800px;
+        }
+        #writeMode{
+            float: left;
+            text-align: center;
+            border: 1px solid #fbbd0d;
+            border-radius: 5px;
+        }
+        #poemMode{
+            height: 100%;
+            padding: 11px 0;
+            width: 100px;
+            float: left;
+        }
+        #storyMode{
+            height: 100%;
+            padding: 11px 0;
+            width: 100px;
+            float: right;
+        }
+        #postBtn{
+            float: right;
+            padding: 10px 30px;
+            margin-bottom: 10px;
+            color: #fbbd0d;
+            font-size: 18px;
+            border: 1px solid #fbbd0d;
+            border-radius: 30px;
+            background-color: transparent;
+            outline: 0;
+        }
+        #postBtn:hover{
+            background-color: #fbbd0d;
+            color: #2d2c2e;
+            font-weight: bold;
+        }
+		input[type="text"]{
+			width: 100%;
+			border: 1px solid #fbbd0d;
+			background-color: transparent;
+			border-radius: 5px 5px 0 0;
+			padding: 15px 50px;
+			font-size: 20px;
+			text-align: center;
+			color: #faf5e6;
+			margin-top: 10px;
+		}
+        textarea{
+            width: 100%;
+            height: 100%;
+            padding: 50px 100px;
+            font-size: 20px;
+            background-color: #2d2c2e;
+            color: #faf5e6;
+            border-radius: 0 0 5px 5px;
+            border: 1px solid #fbbd0d;
+            clear: both;
+        }
+		textarea::placeholder{
+			padding: 0;
+		}
+
+        @media screen and (max-width: 1200px){
+            #wrapper{
+                width: 90%;
+            }
+        }
+        @media screen and (max-width: 500px){
+            body{
+                font-size: 15px;
+            }
+            #siru{
+                display: none;
+            }
+            #wrapper{
+                width: 100%;
+            }
+            #poemMode{
+                padding: 9px 0; 
+                width: 60px;
+                font-size: 13px;
+            }
+            #storyMode{
+                padding: 9px 0; 
+                width: 60px;
+                font-size: 13px;
+            }
+            #nav #nav_right a.dynamic{
+                display: none;
+            }
+            #postBtn{
+                padding: 8px 15px;
+                font-size: 13px;
+                background-color: transparent;
+            }
+            #writeArea{
+                height: 550px;
+            }
+			textarea{
+				padding: 50px 30px;
+				font-size: 14px;
+			}
+			input[type=text]{
+				font-size: 16px;
+			}
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./common.js"></script>
+    <script>
+        var flag = false;
+        
+        $(function(){
+            // 이야기에  default(3일차)
+            $("#storyMode").css("background-color","#fbbd0d");
+            $("#storyMode").css("color","#2d2c2e");
+            $("#storyMode").css("font-weight","bold");
+            $("#poemMode").css("background-color","transparent");
+            $("#poemMode").css("color","#faf5e6");
+            $("#poemMode").css("font-weight","normal");
+
+            $("#poemMode").mousedown(function(){
+                $("#poemMode").css("background-color","#fbbd0d");
+                $("#poemMode").css("color","#2d2c2e");
+                $("#poemMode").css("font-weight","bold");
+                $("#storyMode").css("background-color","transparent");
+                $("#storyMode").css("color","#faf5e6");
+                $("#storyMode").css("font-weight","normal");
+                flag = true;
+            });
+            
+            $("#storyMode").mousedown(function(){
+                $("#storyMode").css("background-color","#fbbd0d");
+                $("#storyMode").css("color","#2d2c2e");
+                $("#storyMode").css("font-weight","bold");
+                $("#poemMode").css("background-color","transparent");
+                $("#poemMode").css("color","#faf5e6");
+                $("#poemMode").css("font-weight","normal");
+                flag = false;
+            });
+
+
+
+            $("button").click(function(){
+                if(flag){
+                    $("form").attr({
+                        action: "/poemdo",
+                        method: "post"
+                    });
+                }else{
+                        $("form").attr({
+                            action: "/storydo",
+                            method: "post"
+                        });
+
+                }
+                $("form").submit();
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div id="nav">
+        <a href="/index"><img id="logo" src="./image/logo_yellow.png"></a>
+        <span id="nav_right">
+            <a href="/board_poem" class="dynamic">작품</a>
+            <a href="/board_story" class="dynamic">사는 이야기</a>
+			
+			<%if(sessionId == ""){
+				loginStateMsg = "로그인";
+			}else{
+				loginStateMsg = "로그아웃";
+			}%>
+			<%if(sessionId == ""){%>
+				<a href="/index#sign"><%=loginStateMsg%></a>
+			<%}else{%>
+				<a href="/mypage">마이페이지</a>
+				<a href="/index_loggout"><%=loginStateMsg%></a>
+			<%}%>
+
+        </span>
+    </div>
+    <h1 id="siru">시루</h1>
+    <div id="wrapper">
+        <div id="writeArea">
+            <div id="writeMode">
+                <div id="poemMode">作</div>
+                <div id="storyMode">이야기</div>
+            </div>
+			<button id="postBtn">글 올리기</button>
+            <form>
+                <!-- title 파라미터 -->
+                <input type="text" name = "title" placeholder="제목" required></input>
+                <!-- writer 파라미터 : 나중에 자동으로 글을 쓰면 작성자가 뜨게끔 설정....-->
+                <!-- <input type="text" name = "writer" placeholder="작성자" required></input> -->
+                <!-- content 파라미터 -->
+                <textarea wrap="hard" name="content" id="" cols="20" rows="20" placeholder=" 시루에는 두 가지 게시판이 있습니다.&#10;
+                    왼쪽 상단의 '作' 과 '이야기' 중 하나를 선택해서 글을 써보세요.&#10;&#10; [ 作 - 작품 ]&#10; 작품을 게시하는 공간입니다.&#10;
+                    시, 소설, 수필, 일기 어떤 종류의 글도 상관없습니다.&#10;떠오르는 감정들을 그대로 풀어놓고,&#10;또는 수차례 정제해서 적어도 좋습니다.&#10;
+                    어떤 글이든 작품이 될 수 있으니까요.&#10;&#10;[ 사는 이야기 ]&#10;사람들과 일상의 이야기를 공유하는 공간입니다.&#10;즐겁거나 슬픈 일들.&#10;
+                    누군가에게 묻고 싶은 것들.&#10;남에게 말 못하던 것들.&#10;이 곳에서 털어놓으세요.
+                " required></textarea>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

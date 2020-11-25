@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./common.css">
+        <style>
+       /* 게시물 */
+        #board_title{
+            padding: 30px;
+            text-align: center;
+            font-size: 40px;
+        }
+        #board{
+            margin-bottom: 200px;
+            width: 100%;
+        }
+        .post{
+            float: left;
+            position: relative;
+            height: 300px;
+            width: 20%;
+            margin: 2.5%;
+            border: 1px solid #fbbd0d;
+            text-align: center;
+        }
+        .post:hover{
+            color: #fbbd0d;
+        }
+        .post h3{
+            position: absolute;
+            left: 50%;
+            width: 70%;
+            transform: translateX(-50%);
+            top: 30%;
+        }
+        .uid{
+            position: absolute;
+            right: 20%;
+            bottom: 10%;
+            font-size: 13px;
+        }
+        
+
+        @media screen and (max-width: 1200px){
+            #wrapper{
+                width: 90%;
+            }
+            .post{
+                height: 250px;
+                width: 28%;
+            }
+            .post .uid{
+                right: 10%;
+            }
+        }
+        @media screen and (max-width: 800px){
+            .post{
+                height: 200px;
+                width: 45%;
+                margin: 2.5%;
+            }
+        }
+        @media screen and (max-width: 500px){
+            body{
+                font-size: 15px;
+            }
+            #siru{
+                display:none;
+            }
+            #board_title{
+                padding-top: 100px;
+            }
+            #nav #nav_right span{
+                font-size: 12px;
+            }
+            #nav #nav_right .dynamic{
+                /* display: none; */
+            }
+            .post{
+                height: 200px;
+                width: 95%;
+                margin: 2.5%;
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./common.js"></script>
+</head>
+<body>
+    <div id="nav">
+	<img id="logo" src="./image/logo_yellow.png">
+        <span id="nav_right">
+            <a href="/poem" class="dynamic">작품</a>
+            <a href="/#sign">로그인</a>
+        </span>
+    </div>
+    <a href="/write" id="writeBtn">글쓰기</a>
+    <h1 id="siru">시루</h1>
+    <div id="wrapper">
+        <h2 id="board_title">사는 이야기</h2>
+        <div id="board">
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div class="post"><h3>이 곳은 제목이 오는 곳입니다.</h3><div class="uid">user_id</div></div>
+            <div style="clear:both;height:100px;"></div>
+        </div>
+    </div>
+</body>
+</html>

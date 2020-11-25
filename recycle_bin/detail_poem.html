@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./common.css">
+        <style>
+        h2{
+            font-weight: normal;
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+        p{
+            line-height: 45px;
+            margin-bottom: 200px;
+        }
+        #uid{
+            display: block;
+            width: 60%;
+            text-align: right;
+        }
+        button{
+            position: fixed;
+            padding: 15px 20px;
+            text-align: center;
+            left: 60%;
+            bottom: 50px;
+            font-size: 15px;
+            background-color: black;
+            border: 1px solid black;
+            border-radius: 40px;
+            color: #faf5e6;
+            box-shadow: 0 12px 20px rgb(27, 27, 27);
+            z-index: 1;
+            outline: 0;
+        }
+
+        @media screen and (max-width: 1200px){
+            #wrapper{
+                width: 80%;
+            }
+            button{
+                left: 70%;
+            }
+        }
+         @media screen and (max-width: 500px){
+            body{
+                font-size: 15px;
+            }
+            #siru{
+                display: none;
+            }
+            #wrapper{
+                width: 90%;
+            }
+            h2{
+                padding-top: 100px;
+            }
+            button{
+                left: 80%;
+            }
+            #uid{
+                width: 80%;
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./common.js"></script>
+    <script>
+        var flag = false;
+        $(function(){
+            $("button").click(function(){
+                if(flag == false){
+                    $("button").css("background-color","#fbbd0d");
+                    $("button").css("color","#2d2c2e");
+                    $("button").css("font-weight","bold");
+                    flag = true;
+                }else{
+                    $("button").css("background-color","black");
+                    $("button").css("color","#faf5e6");
+                    $("button").css("font-weight","lighter");
+                    flag = false;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <a href="/write" id="writeBtn">글쓰기</a>
+    <button>공감 14</button>
+    <div id="nav">
+        <img id="logo" src="./image/logo_yellow.png">
+        <span id="nav_right">
+            <a href="/poem" class="dynamic">작품</a>
+            <a href="/story" class="dynamic">사는 이야기</a>
+            <a href="/#sign">로그인</a>
+        </span>
+    </div>
+    <h1 id="siru">시루</h1>
+    <div id="wrapper">
+        <h2>꼽추</h2>
+        <span id="uid">김기택</span>
+        <p>지하도<br/>
+        그 낮게 구부러진 어둠에 눌려<br/>
+        그 노인은 언제나 보이지 않았다.<br/>
+        출근길<br/>
+        매일 그 자리 그 사람이지만<br/>
+        만나는 건 늘<br/>
+        빈 손바닥 하나, 동전 몇 개뿐이었다.<br/>
+         <br/>
+        가슴 등뼈 아래 숨어사는 작은 얼굴 하나<br/>
+        시멘트를 응고시키는 힘이 누르고 있는 흰 얼굴 하나<br/>
+        그것마저도 아예 안 보이는 날이 더 많았다.<br/>
+         <br/>
+        하루는 무덥고 시끄러운 정오의 길바닥에서<br/>
+        그 노인이 조용히 잠든 것을 보았다.<br/>
+        등에 커다란 알을 하나 품고<br/>
+        그 알 속으로 들어가<br/>
+        태아처럼 웅크리고 자고 있었다.<br/>
+        곧 껍질을 깨고 무엇이 나올 것 같아<br/>
+        철근 같은 등뼈가 부서지도록 기지개를 하면서<br/>
+        그것이 곧 일어날 것 같아<br/>
+        그 알이 유난히 크고 위태로워 보였다.<br/>
+        거대한 도시의 소음보다 더 우렁찬<br/>
+        숨소리 나직하게 들려오고<br/>
+        웅크려 알을 품고 있는 어둠 위로 종일 빛이 내리고 있었다.<br/>
+         <br/>   
+        다음날부터 노인은 보이지 않았다.<br/>
+        </p>
+    </div>
+</body>
+</html>

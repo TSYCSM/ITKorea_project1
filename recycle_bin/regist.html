@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./common.css">
+    <style>
+          /* 회원가입/로그인 폼 */
+          #sign{
+            margin-top: 350px;
+            height: 750px;
+            width: 30%;
+            text-align: center;
+        }
+        #sign h3{
+            font-size: 40px;
+            font-weight: normal;
+            color: #faf5e6;
+            margin-bottom: 100px;
+        }
+        #sign #signin{
+            float: left;
+            width: 40%;
+        }
+        #sign #signup{
+            float: right;
+            width: 40%;
+        }
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+        .container {
+            padding: 16px;
+            text-align: center;
+        }
+        button {
+            background-color: #b1850e;
+            color: #faf5e6;
+            padding: 14px 20px;
+            border: none;
+            cursor: pointer;
+            width: 60%;
+            opacity: 0.9;
+            border-radius: 5px;
+        }
+        button:hover {
+            opacity:1;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./common.js"></script>
+</head>
+<body>
+    <form id="signup" action="action_page.php">
+        <div class="container">
+            <h1 align="center" style="font-size:25px;margin-bottom:30px;">가입</h1>
+            <input type="text" placeholder="아이디 입력 (6자 이상)" name="uid" required>
+            <input type="password" placeholder="비밀번호 입력 (6자 이상)" name="upass" required>
+            <input type="password" placeholder="비밀번호 한번 더 입력" name="reupass" required>
+            <button type="button">등록</button>
+        </div>
+    </form>
+</body>
+</html>

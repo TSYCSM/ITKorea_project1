@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./common.css">
+        <style>
+        
+        /* 첫 화면에서 보여질 작품 */
+        #main{
+            padding-top: 150px;
+            overflow: hidden;
+        }
+        #main #talk{
+            float: left;
+        }
+        #main #talk h2{
+            font-weight: bold;
+            font-size: 60px;
+            line-height: 100px;
+            padding-bottom: 30px;
+        }
+        #main #talk p{
+            font-size: 20px;
+            line-height: 40px;
+        }
+        #main #poem{
+            padding-top: 300px;
+            padding-bottom: 100px;
+            float: right;
+            width: 35%;
+        }
+        #main #poem h2{
+            font-size: 50px;
+            padding-bottom: 30px;
+        }
+        #main #poem p{
+            line-height: 50px;
+        }
+        #main #poem span{
+            display: block;
+            margin-top: 50px;
+        }
+        /* 공감을 많이 받은 글 */
+        #best{
+            overflow: hidden;
+            margin: auto;
+            margin-bottom: 250px;
+        }
+        #best h2{
+            font-size: 40px;
+            font-weight: normal;
+            margin: 120px 0;
+        }
+        #best h3{
+            display: inline;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            float: left;
+            font-weight: normal;
+        }
+        #best a{
+            margin-right: 15px;
+        }
+        #bestPoem, #bestPost{
+            width: 40%;
+        }
+        #bestPoem{
+            float: left;
+        }
+        #bestPost{
+            float: right;
+        }
+        #best table {
+            border-collapse: collapse;
+            width: 100%;
+            height: 100%;
+        }
+        #best table th, td {
+            position: relative;
+            text-align: left;
+            padding: 16px;
+        }
+        #best span{
+            position: absolute;
+            bottom: 7px;
+            right: 13px;
+            font-size: 10px;
+        }
+        #best table tr:nth-child(odd) {
+            border-top: 1px solid #fbbd0d;
+            border-bottom: 1px solid #fbbd0d;
+        }
+        /* 시루 소개글 - 탄생 배경/사용법 */
+        #intro{
+            margin: 50px 0;
+            overflow: hidden;
+            line-height: 40px;
+        }
+        #intro h4{
+            font-size: 30px;
+            font-weight: normal;
+            margin: 50px 0;
+        }
+        #birth{
+            width: 100%;
+            padding-bottom: 100px;
+        }
+        #menual{
+            width: 40%;
+            float: right;
+        }
+        /* 회원가입/로그인 폼 */
+        #sign{
+            margin-top: 350px;
+            height: 750px;
+            width: 100%;
+            text-align: center;
+        }
+        #sign h3{
+            font-size: 40px;
+            font-weight: normal;
+            color: #faf5e6;
+            margin-bottom: 100px;
+        }
+        #sign #login{
+            float: left;
+            width: 40%;
+        }
+        #sign #regist{
+            float: right;
+            width: 40%;
+        }
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+        input[name=regist_email]{
+			float: left;
+			width: 49%;
+		}
+        #regist select[name=regist_emailAdd]{
+			position: relative;
+			top: 5px;
+			width: 49%;
+			padding: 14px 20px;
+			float: right;
+			background-color: #f1f1f1;
+			border: none;
+			border-radius: 5px;
+		}
+		#regist #mailAdd option{
+			background-color: #f1f1f1;
+		}
+        .container {
+            padding: 16px;
+            text-align: center;
+        }
+        button {
+            background-color: #b1850e;
+            color: #faf5e6;
+            padding: 14px 20px;
+            border: none;
+            cursor: pointer;
+            width: 60%;
+            opacity: 0.9;
+            border-radius: 5px;
+        }
+        button:hover {
+            opacity:1;
+        }
+        @media screen and (max-width: 900px){
+            #wrapper{
+                width: 90%;
+            }
+            #main #poem{
+                padding-top: 350px;
+            }
+            #bestPoem, #bestPost{
+                float: none;
+                width: 80%;
+                margin: 100px auto;
+            }
+            #sign{
+                height: 1100px;
+            }
+            #sign #login, #sign #regist{
+                float: none;
+                width: 80%;
+                margin: 50px auto;
+            }
+        }
+        @media screen and (max-width: 500px){
+            body{
+                font-size: 15px;
+            }
+            #nav #nav_right span{
+                font-size: 12px;
+            }
+            #writebtn{
+                font-size: 14px;
+            }
+            #main{
+                padding-top: 70px;
+            }
+            #main #talk h2{
+                font-size: 50px;
+                line-height: 80px;
+            }
+            #main #poem{
+                padding-top: 100px;
+                float: left;
+                width: 100%;
+            }
+            #nav #nav_right .dynamic{
+                display: none;
+            }
+            #menual{
+                width: 100%;
+            }
+            #best{
+                margin-bottom: 0;
+            }
+            #bestPoem, #bestPost{
+                width: 100%;
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./common.js"></script>
+	<script>
+		//script영역은 전부 새로 추가한 것임
+		//회원가입과 로그인 기능 추가
+		$(function(){
+         
+			$("#registbtn").on("click", function(){
+				var regist_id = $('input[name=regist_id]');
+				var regist_pass = $('input[name=regist_pass]');
+				var regist_repass = $('input[name=regist_repass]');
+				var regist_email = $('input[name=regist_email]');
+				if(regist_id.val() == ""){
+					alert("아이디를 입력해주세요");
+					regist_id.focus();
+				}else if(regist_pass.val() == ""){
+					alert("비밀번호를 입력해주세요");
+					regist_pass.focus();
+				}else if(regist_repass.val() == ""){
+					alert("비밀번호를 재입력해주세요");
+					regist_repass.focus();
+				}else if(regist_email.val() == ""){
+					alert("이메일을 입력해주세요");
+					regist_email.focus();
+				}else if(regist_pass.val() != regist_repass.val()){
+					alert("비밀번호가 달라요");
+					regist_pass.focus();
+				}else{
+                    var n=0; //체크된 횟수를 누적시킬 변수
+                    for(var i=0;i<$("input[name='genre_id']").length;i++){
+                        var ch=$("input[name='genre_id']")[i]; 
+                        if(ch.checked){
+                            n++;
+                        }
+                    }
+                    if(n<1){//보유기술을 체크하지 않았다면...욕!!
+                        alert("적어도 1개이상 장르를 체크해주세요");
+                        return; //실행부를 리턴 시킴
+                    }
+					$("#regist").attr({
+						"method":"post",
+						"action":"/member/regist",
+					});
+					$("#regist").submit();
+				}
+			});
+			$('#loginbtn').on("click", function(){
+				$('#login').attr({
+					"method":"post",
+					"action":"/member/login",
+				});
+				$("#login").submit();
+			});
+		});
+	</script>
+</head>
+<body>
+    <div id="nav">
+        <a href="/index"><img id="logo" src="./image/logo_yellow.png"></a>
+        <span id="nav_right">
+            <a href="/board_poem" class="dynamic">작품</a>
+            <a href="/board_story" class="dynamic">사는 이야기</a>
+			
+			<%if(sessionId == ""){
+				loginStateMsg = "로그인";
+			}else{
+				loginStateMsg = "로그아웃";
+			}%>
+			<%if(sessionId == ""){%>
+				<a href="/index#sign"><%=loginStateMsg%></a>
+			<%}else{%>
+				<a href="/mypage">마이페이지</a>
+				<a href="/index_loggout"><%=loginStateMsg%></a>
+			<%}%>
+
+        </span>
+    </div>
+    <a href="/write" id="writeBtn">글쓰기</a>
+    <h1 id="siru">시루</h1>
+    <div id="wrapper">
+        <div id="main">
+            <div id="talk">
+                <h2>당신의<br/>하루를<br/><span class="yellow">빛</span>나게.</h2>
+                <p><span class="yellow">시 한 잔</span>하고<br/>한 숨 돌리세요.</p>
+            </div>
+            <div id="poem">
+                <h2 class="yellow">하루</h2>
+                <p>흙과 섞이어 자연으로 누울<br/>
+                내가 보이는데<br/>
+                흔적을 구하려는 옳지 않음이<br/>
+                옳음처럼 나를 결박합니다<br/>
+                띠를 두른 흙냄새가<br/>
+                목을 감아도<br/>
+                묶어서 던져 버리지 못하는<br/>
+                오늘은 옳지 않음의 반복입니다</p>
+                <span>- 김초혜 <일기> -</span>
+            </div>
+        </div>
+        <div id="best">
+            <h2>537명의 이야기들.</h2>
+            <div id="bestPoem">
+                <h3>공감 作</h3><a href="/poem" style="float:right">...</a>
+                <table>
+                    <tr>
+                        <td><a href="#">this is..</a><span>User ID</span></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">this is  of something..</a><span>User ID</span></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#"> of something..</a><span>User ID</span></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">this this is title of something..</a><span>User ID</span></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">this is title of something..</a><span>User ID</span></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="bestPost">
+                <h3>공감 이야기</h3><a href="/story" style="float:right">...</a>
+                <table>
+                    <tr>
+                        <td><a href="#">this is title of something..</a><span>User ID</span></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">this is title of..</a><span>User ID</span></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">this is .</a><span>User ID</span></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">this is title g..</a><span>User ID</span></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">this is title of something..</a><span>User ID</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="intro">
+            <div id="birth">
+                <h4>시루는..</h4>
+                <p>
+                    2020년 겨울에 탄생한 시루는 <br/>
+                    읽고 쓰기를 좋아하는 대학생들이 모여 만들었습니다.<br/>
+                    <br/>
+                    어느 누구든 마음 속엔 작가가 살고 있습니다.<br/>
+                    마음 속의 작가가 활약할 수 있도록<br/>
+                    무대를 마련하고 싶었습니다.<br/>
+                    <br/>
+                    일상의 대화조차 명작이 될 수 있는 것처럼,<br/>
+                    글이라는 도구로 당신을 그려보세요.
+                </p>
+            </div>
+            <div id="menual">
+                <h4>시루 사용법</h4>
+                <p>
+                    시루의 첫 화면은 언제나 글 한편이 차지합니다.<br/>
+                    한 편의 시를 보며, 하루를 정리하세요.<br/>
+                    <br/>
+                    생각이 든다면<br/>
+                    어떤 글이라도 상관 없습니다.<br/>
+                    <br/> 
+                    "글쓰기" 를 눌러서 시작하세요.<br/>
+                    상세한 방법은 버튼 안에 숨겨져있으니 걱정 마세요.<br/>
+                    <br/>
+                    시루는 언제나 작가님 당신을 환영합니다.<br/>
+                </p>
+            </div>
+        </div>
+        <!--sign부분의 id 식별자를 바꿈(구별을 위해)-->
+        <div id="sign" <%if(sessionId == ""){%>style="display:block;"<%}else{%>style="display:none";<%}%>>
+            <h3>시작하세요.</h3>
+            <form id="login">
+                <div class="container">
+                    <h1 align="center" style="font-size:25px;margin-bottom:30px;">로그인</h1>
+                    <input type="text" placeholder="아이디 입력" name="login_id" required>
+                    <input type="password" placeholder="비밀번호 입력" name="login_pass" required>
+                    <a href="/findId">아이디 찾기</a><br>
+                    <button type="button" id="loginbtn">시작</button>
+                </div>
+            </form>
+            <form id="regist">
+                <div class="container" >
+                    <h1 align="center" style="font-size:25px;margin-bottom:30px;">가입</h1>
+                    <input type="text" placeholder="아이디 입력 (6자 이상)" name="regist_id" required>
+                    <input type="password" placeholder="비밀번호 입력 (6자 이상)" name="regist_pass" required>
+                    <input type="password" placeholder="비밀번호 한번 더 입력" name="regist_repass" required>
+                    <input type="text" placeholder="이메일 입력" name="regist_email" required>
+                    <select name="regist_emailAdd">
+                        <option value="gmail.com">구글</option>
+                        <option value="naver.com">네이버</option>
+                        <option value="daum.net">다음</option>
+                        <option value="nate.com">네이트</option>
+                    </select>
+                    <input type="text" placeholder="닉네임 입력" name="regist_nickname" required>
+                    <div class ="genreBox" style = "text-align: left; font-size : 18px">                 
+                        좋아하는 장르&emsp;&emsp;
+                        시&nbsp;<input type="checkbox" name="genre_id" value="1"/> &nbsp;
+                        수필&nbsp;<input type="checkbox" name="genre_id" value="2"/>&nbsp;
+                        소설&nbsp;<input type="checkbox" name="genre_id" value="3"/> &nbsp;
+                        일기&nbsp;<input type="checkbox" name="genre_id" value="4"/>
+                    </div>
+                    <br>
+                    <button id="registbtn" type="button">등록</button>
+                    <br><br><br><br>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+

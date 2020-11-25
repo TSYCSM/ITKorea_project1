@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>mypage</title>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./common.css">
+        <style>
+        
+        #best table th, td {
+            position: relative;
+            text-align: center;
+            padding: 16px;
+        }
+        
+        
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        button {
+            background-color: #b1850e;
+            color: #faf5e6;
+            padding: 14px 20px;
+            border: none;
+            cursor: pointer;
+            width: 60%;
+            opacity: 0.9;
+            border-radius: 5px;
+        }
+     
+        
+        @media screen and (max-width: 500px){
+            body{
+                font-size: 15px;
+            }
+            #nav #nav_right span{
+                font-size: 12px;
+            }
+           
+            #nav #nav_right .dynamic{
+                display: none;
+            }
+           
+        }
+        #container{
+            position: absolute;
+            
+            margin: 0 auto;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <div id="nav">
+        <a href="/index"><img id="logo" src="./image/logo_yellow.png"></a>
+        <span id="nav_right">
+            <a href="/board_poem" class="dynamic">��ǰ</a>
+            <a href="/board_story" class="dynamic">��� �̾߱�</a>
+	
+			<%if(sessionId == ""){
+				loginStateMsg = "�α���";
+			}else{
+				loginStateMsg = "�α׾ƿ�";
+			}%>
+			<%if(sessionId == ""){%>
+				<a href="/index#sign"><%=loginStateMsg%></a>
+			<%}else{%>
+				<a href="/index_loggout"><%=loginStateMsg%></a>
+			<%}%>
+
+        </span>
+    </div>
+    <h1 id="siru">�÷�</h1>
+    <div id = "container">
+        <form action = "/mypage_update" method = "post">
+            <input type = "hidden" name = "member_id" value = <%=userInfo.member_id%>>
+            <table border = "1"  align = "center">
+                <caption><h2>����������</h2></caption>
+                <tr>
+                    <th>ID</th>
+                    <td><%=userInfo.id%></td>
+                </tr>
+                <tr>
+                    <th rowspan = "2">Password</th>
+                    <td><input type = "password" name = "password" value = <%=userInfo.password%>></td>
+                </tr>
+                <tr>
+                    <td><input type = "password" name = "repassword" value = <%=userInfo.password%>></td>
+                </tr>
+                <tr>
+                    <th>Nickname</th>
+                    <td><input type = "text" name = "nickname" value =  <%=userInfo.nickname%>></td>
+                </tr>
+                <tr>
+                    <th>���Գ�¥</th>
+                    <td><%=userInfo.regdate%></td>
+                </tr>
+                <tr>
+                    <td colspan = "2" align = "center">
+                        <input type = "button" value = "Ȯ��" onclick = "history.back()">
+                        <input type = "submit" value = "��������">
+                        <%if(sessionId == "admin"){%>
+                            <input type = "button" value = "��� ȸ�� ��������" onclick = "location.href = '/adminpage'">
+                        <%}%>
+                    </td>
+
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./common.css">
+        <style>
+        /* 게시물 */
+        #board_title{
+            padding: 30px;
+            text-align: center;
+            font-size: 40px;
+        }
+        #board{
+            margin-bottom: 200px;
+            width: 100%;
+        }
+        .post{
+            float: left;
+            position: relative;
+            height: 300px;
+            width: 20%;
+            margin: 2.5%;
+            border: 1px solid #fbbd0d;
+            text-align: center;
+        }
+        .post:hover{
+            color: #fbbd0d;
+        }
+        .post h3{
+            position: absolute;
+            left: 50%;
+            width: 70%;
+            transform: translateX(-50%);
+            top: 30%;
+        }
+        .uid{
+            position: absolute;
+            right: 20%;
+            bottom: 25%;
+            font-size: 13px;
+        }
+		.hit{
+			position: absolute;
+			bottom: 4%;
+			left: 7%;
+            font-size: 13px;
+		}
+        .urow{
+            position: absolute;
+            left: 7%;
+            top: 2%;
+            font-size: 13px;
+        }
+        
+
+        @media screen and (max-width: 1200px){
+            #wrapper{
+                width: 90%;
+            }
+            .post{
+                height: 250px;
+                width: 28%;
+            }
+            .post .uid{
+                right: 10%;
+            }
+        }
+        @media screen and (max-width: 800px){
+            .post{
+                height: 200px;
+                width: 45%;
+                margin: 2.5%;
+            }
+        }
+        @media screen and (max-width: 500px){
+            body{
+                font-size: 15px;
+            }
+            #siru{
+                display:none;
+            }
+            #board_title{
+                padding-top: 100px;
+            }
+            #nav #nav_right span{
+                font-size: 12px;
+            }
+            #nav #nav_right .dynamic{
+                /* display: none; */
+            }
+            .post{
+                height: 200px;
+                width: 95%;
+                margin: 2.5%;
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./common.js"></script>
+	<script>
+        
+        function  getHighlight(str){
+            $('.'+str+'').attr({
+					"src":"./image/hit_yellow.png"
+			});
+        }
+        function removeHighlight(str){
+            $('.'+str+'').attr({
+					"src":"./image/hit_white.png"
+			});
+        }
+	</script>
+</head>
+<body>
+    <div id="nav">
+        <a href="/index"><img id="logo" src="./image/logo_yellow.png"></a>
+        <span id="nav_right">
+            <a href="/board_story" class="dynamic">사는 이야기</a>
+			
+			<%if(sessionId == ""){
+				loginStateMsg = "로그인";
+			}else{
+				loginStateMsg = "로그아웃";
+			}%>
+			<%if(sessionId == ""){%>
+				<a href="/index#sign"><%=loginStateMsg%></a>
+			<%}else{%>
+				<a href="/index_loggout"><%=loginStateMsg%></a>
+			<%}%>
+
+        </span>
+    </div>
+    <a href="/write" id="writeBtn">글쓰기</a>
+    <h1 id="siru">시루</h1>
+    <div id="wrapper">
+        <h2 id="board_title">作</h2>
+        <div id="board">
+            <!-- (2일차) -->
+            <% var n = poemArray.length%>
+            <%for(var i = 0; i < poemArray.length; i++){%>
+                <% var poem = poemArray[i]%>
+                <a href = "/detail_poem?poem_id=<%=poem.poem_id%>">
+					<div class="post" onmouseover="getHighlight(str = 'hit_image<%=i%>')" onmouseout="removeHighlight(str = 'hit_image<%=i%>')">
+						<div class="urow">No.<%=poem.rn%></div>
+						<h3><%=poem.title%></h3>
+						<div class="hit">
+							<img class="hit_image<%=i%>"  style="width:18px;" src="./image/hit_white.png">
+							<div style="display:inline"><%=poem.hit%></div>
+						</div>
+						<div class="uid"><%=poem.writer%></div>
+					</div>
+				</a>
+                <%n = n-1%>
+            <%}%>
+            <div style="clear:both;height:100px;"></div>
+        </div>
+    </div>
+</body>
+</html>

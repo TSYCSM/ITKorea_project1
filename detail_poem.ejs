@@ -1,0 +1,130 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./common.css">
+        <style>
+        h2{
+            font-weight: normal;
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+        p{
+            line-height: 45px;
+            margin-bottom: 200px;
+        }
+        #uid{
+            display: block;
+            width: 60%;
+            text-align: right;
+        }
+        input[type="button"]{
+            position: fixed;
+            padding: 15px 20px;
+            text-align: center;
+            left: 60%;
+            bottom: 50px;
+            font-size: 15px;
+            background-color: black;
+            border: 1px solid black;
+            border-radius: 40px;
+            color: #faf5e6;
+            box-shadow: 0 12px 20px rgb(27, 27, 27);
+            z-index: 1;
+            outline: 0;
+        }
+
+        @media screen and (max-width: 1200px){
+            #wrapper{
+                width: 80%;
+            }
+            button{
+                left: 70%;
+            }
+        }
+         @media screen and (max-width: 500px){
+            body{
+                font-size: 15px;
+            }
+            #siru{
+                display: none;
+            }
+            #wrapper{
+                width: 90%;
+            }
+            h2{
+                padding-top: 100px;
+            }
+            button{
+                left: 80%;
+            }
+            #uid{
+                width: 80%;
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./common.js"></script>
+    <script>
+        var flag = false;
+        $(function(){
+            $(":button").click(function(){
+                if(flag==false){
+                    $(":button").css("background-color","#fbbd0d");
+                    $(":button").css("color","#2d2c2e");
+                    $(":button").css("font-weight","bold");
+                    //공감 수 하나씩 올리기(후에 데이터베이스에 반영 필요)(오류)
+                    var newVal = String((parseInt($(":button").val())+1));
+                    $(":button").val(newVal);
+                    flag = true;
+                }else{
+                    $(":button").css("background-color","black");
+                    $(":button").css("color","#faf5e6");
+                    $(":button").css("font-weight","lighter");
+                    //공감 한번 밖에 못올리게 설정
+                }
+            });
+        });
+
+        
+    </script>
+</head>
+<body>
+    <a href="/write" id="writeBtn">글쓰기</a>
+    <input type ="button" value = "<%=poem.hit%>"></button>
+    <div id="nav">
+        <a href="/index"><img id="logo" src="./image/logo_yellow.png"></a>
+        <span id="nav_right">
+            <a href="/board_poem" class="dynamic">작품</a>
+            <a href="/board_story" class="dynamic">사는 이야기</a>
+
+			<%if(sessionId == ""){
+				loginStateMsg = "로그인";
+			}else{
+				loginStateMsg = "로그아웃";
+			}%>
+			<%if(sessionId == ""){%>
+				<a href="/index#sign"><%=loginStateMsg%></a>
+			<%}else{%>
+				<a href="/index_loggout"><%=loginStateMsg%></a>
+			<%}%>
+
+        </span>
+    </div>
+    <h1 id="siru">시루</h1>
+    <!-- (3일차) -->
+    <!--  textarea </br>적용하기-->
+    <div style="white-space: pre-line" id = "wrapper">
+        <h2><%=poem.title%></h2>
+        <span id="uid"><%=poem.writer%></span>
+        <span id="uid"><%=poem.hit%></span>
+        <%=poem.content%>
+    </div>
+	
+    <button name = "update" <%if(sessionId != poem.writer){%>style="display:none"<%}%> onclick="location.href = '/updateForm_poem?poem_id=<%=poem.poem_id%>'">수정</button>
+    <button name = "delete" <%if(sessionId != poem.writer){%>style="display:none"<%}%> onclick="location.href = '/delete_poem?poem_id=<%=poem.poem_id%>'">삭제</button>
+</body>
+</html>

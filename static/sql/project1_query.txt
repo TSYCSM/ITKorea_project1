@@ -1,0 +1,61 @@
+
+----database 생성----
+create database test default character set utf8;
+
+
+----사용자 생성----
+use mysql;
+create user 'test'@'localhost' identified by 'test';
+grant all privileges on test.* to test@'localhost' identified by 'test';
+
+----사용자 삭제----
+drop user test@localhost;
+
+----table 삭제----
+drop table poem;
+drop table story;
+drop table genre;
+drop table member_genre;
+drop table member;
+
+
+
+----table 생성----
+create table poem(
+	poem_id int primary key auto_increment
+	,hit int default 0
+	,title varchar(200)
+	,writer varchar(20)
+	,content varchar(1000)
+	,regdate DATETIME DEFAULT   CURRENT_TIMESTAMP
+);
+create table story(
+	story_id int primary key auto_increment
+	,hit int default 0
+	,title varchar(200)
+	,writer varchar(20)
+	,content varchar(1000)
+	,regdate DATETIME DEFAULT   CURRENT_TIMESTAMP
+);
+create table genre(
+	genre_id int primary key auto_increment
+	, name varchar(20)
+);
+create table member_genre(
+	member_genre_id int primary key auto_increment
+	,member_id int
+	,genre_id int
+);
+CREATE TABLE member(
+   member_id INT AUTO_INCREMENT PRIMARY KEY
+   , id VARCHAR(20)
+   , password VARCHAR(20)
+   , email VARCHAR(50)
+   , nickname varchar(20)
+   , regdate DATETIME DEFAULT CURRENT_TIMESTAMP
+   , hit INT DEFAULT 0
+);
+
+----닉네임 컬럼 추가----
+alter table member
+add column nickname varchar(20);

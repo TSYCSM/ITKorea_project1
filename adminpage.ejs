@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>mypage</title>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./common.css">
+        <style>
+        
+        /* 첫 화면에서 보여질 작품 */
+        #main{
+            padding-top: 150px;
+            overflow: hidden;
+        }
+        #main #talk{
+            float: left;
+        }
+        #main #talk h2{
+            font-weight: bold;
+            font-size: 60px;
+            line-height: 100px;
+            padding-bottom: 30px;
+        }
+        #main #talk p{
+            font-size: 20px;
+            line-height: 40px;
+        }
+        #main #poem{
+            padding-top: 300px;
+            padding-bottom: 100px;
+            float: right;
+            width: 35%;
+        }
+        #main #poem h2{
+            font-size: 50px;
+            padding-bottom: 30px;
+        }
+        #main #poem p{
+            line-height: 50px;
+        }
+        #main #poem span{
+            display: block;
+            margin-top: 50px;
+        }
+        /* 공감을 많이 받은 글 */
+        #best{
+            overflow: hidden;
+            margin: auto;
+            margin-bottom: 250px;
+        }
+        #best h2{
+            font-size: 40px;
+            font-weight: normal;
+            margin: 120px 0;
+        }
+        #best h3{
+            display: inline;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            float: left;
+            font-weight: normal;
+        }
+        #best a{
+            margin-right: 15px;
+        }
+        #bestPoem, #bestPost{
+            width: 40%;
+        }
+        #bestPoem{
+            float: left;
+        }
+        #bestPost{
+            float: right;
+        }
+        #best table {
+            border-collapse: collapse;
+            width: 100%;
+            height: 100%;
+        }
+        #best table th, td {
+            position: relative;
+            text-align: left;
+            padding: 16px;
+        }
+        #best span{
+            position: absolute;
+            bottom: 7px;
+            right: 13px;
+            font-size: 10px;
+        }
+        #best table tr:nth-child(odd) {
+            border-top: 1px solid #fbbd0d;
+            border-bottom: 1px solid #fbbd0d;
+        }
+        /* 시루 소개글 - 탄생 배경/사용법 */
+        #intro{
+            margin: 50px 0;
+            overflow: hidden;
+            line-height: 40px;
+        }
+        #intro h4{
+            font-size: 30px;
+            font-weight: normal;
+            margin: 50px 0;
+        }
+        #birth{
+            width: 100%;
+            padding-bottom: 100px;
+        }
+        #menual{
+            width: 40%;
+            float: right;
+        }
+        /* 회원가입/로그인 폼 */
+        #sign{
+            margin-top: 350px;
+            height: 750px;
+            width: 100%;
+            text-align: center;
+        }
+        #sign h3{
+            font-size: 40px;
+            font-weight: normal;
+            color: #faf5e6;
+            margin-bottom: 100px;
+        }
+        #sign #login{
+            float: left;
+            width: 40%;
+        }
+        #sign #regist{
+            float: right;
+            width: 40%;
+        }
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+        input[name=regist_email]{
+			float: left;
+			width: 49%;
+		}
+        #regist select[name=regist_emailAdd]{
+			position: relative;
+			top: 5px;
+			width: 49%;
+			padding: 14px 20px;
+			float: right;
+			background-color: #f1f1f1;
+			border: none;
+			border-radius: 5px;
+		}
+		#regist #mailAdd option{
+			background-color: #f1f1f1;
+		}
+        
+        button {
+            background-color: #b1850e;
+            color: #faf5e6;
+            padding: 14px 20px;
+            border: none;
+            cursor: pointer;
+            width: 60%;
+            opacity: 0.9;
+            border-radius: 5px;
+        }
+        button:hover {
+            opacity:1;
+        }
+        @media screen and (max-width: 900px){
+            #wrapper{
+                width: 90%;
+            }
+            #main #poem{
+                padding-top: 350px;
+            }
+            #bestPoem, #bestPost{
+                float: none;
+                width: 80%;
+                margin: 100px auto;
+            }
+            #sign{
+                height: 1100px;
+            }
+            #sign #login, #sign #regist{
+                float: none;
+                width: 80%;
+                margin: 50px auto;
+            }
+        }
+        @media screen and (max-width: 500px){
+            body{
+                font-size: 15px;
+            }
+            #nav #nav_right span{
+                font-size: 12px;
+            }
+            #writebtn{
+                font-size: 14px;
+            }
+            #main{
+                padding-top: 70px;
+            }
+            #main #talk h2{
+                font-size: 50px;
+                line-height: 80px;
+            }
+            #main #poem{
+                padding-top: 100px;
+                float: left;
+                width: 100%;
+            }
+            #nav #nav_right .dynamic{
+                display: none;
+            }
+           
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <div id="nav">
+        <a href="/index"><img id="logo" src="./image/logo_yellow.png"></a>
+        <span id="nav_right">
+            <a href="/board_poem" class="dynamic">작품</a>
+            <a href="/board_story" class="dynamic">사는 이야기</a>
+			
+			<%if(sessionId == ""){
+				loginStateMsg = "로그인";
+			}else{
+				loginStateMsg = "로그아웃";
+			}%>
+			<%if(sessionId == ""){%>
+				<a href="/index#sign"><%=loginStateMsg%></a>
+			<%}else{%>
+				<a href="/mypage">마이페이지</a>
+				<a href="/index_loggout"><%=loginStateMsg%></a>
+			<%}%>
+
+        </span>
+    </div>
+    <h1 id="siru">시루</h1>
+    <table>
+        <tr>
+            <th>NO</th>
+            <th>id</th>
+            <th>password</th>
+            <th>닉네임</th>
+            <th>등록일</th>
+        </tr>
+        <% var n = memberArray.length%>
+        <%for(var i = 0; i<memberArray.length; i++){%>
+            <%var member = memberArray[i];%>
+            <tr>
+                <td><%=n%></td>
+                <td><%=member.id%></td>
+                <td><%=member.password%></td>
+                <td><%=member.nickname%></td>
+                <td><%=member.regdate%></td>
+            </tr>
+            <%n = n-1%>
+        <%}%>
+        <tr>
+            <td colspan = "4" align = "center">
+                <input type="button" value = "확인" onclick ="location.href = '/index'">
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+
