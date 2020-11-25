@@ -144,7 +144,7 @@
                 <% var story = storyArray[i]%>
                 <a href = "/detail_story?story_id=<%=story.story_id%>">
 					<div class="post" onmouseover="getHighlight(str = 'hit_image<%=i%>')" onmouseout="removeHighlight(str = 'hit_image<%=i%>')">
-						<div class="urow">No.<%=story.rn%></div>
+						<div class="urow">No.<%=n%></div>
 						<h3><%=story.title%></h3>
 						<div class="hit">
 							<img class="hit_image<%=i%>"  style="width:18px;" src="./image/hit_white.png">

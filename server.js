@@ -336,13 +336,14 @@ app.post("/poemdo", function(request, response){
 
 //board_poem에서 등록된 poem 불러오기 (2일차)
 app.get("/board_poem", function(request, response){
-	var sql = "SELECT @rownum:=@rownum+1 rn, p.* FROM poem p WHERE (@rownum:=0)=0 order by rn desc";
+	var sql = "SELECT * from poem";
 	
 	con.query(sql, function(error, record, fields){
 		if(error){
 			console.log("시 목록 불러오기 실패 ", error);
 		}else{
-
+			
+			console.log("record"+record);
 			fs.readFile("board_poem.ejs", "utf-8", function(error, data){
 				response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
 				response.end(ejs.render(data, {
@@ -407,7 +408,7 @@ app.post("/storydo", function(request, response){
 
 //board_story에서 등록된 story 불러오기 (3일차)
 app.get("/board_story", function(request, response){
-	var sql = "SELECT @rownum:=@rownum+1 rn, s.* FROM story s WHERE (@rownum:=0)=0 order by rn desc";
+	var sql = "SELECT * from story";
 	
 	con.query(sql, function(error, record, fields){
 		if(error){
