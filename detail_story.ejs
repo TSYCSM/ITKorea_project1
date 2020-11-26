@@ -140,20 +140,17 @@
 			}
 		});
 		$(".update_confirm_btn").on("click", function(){
-			var comment_id = document.getElementsByName('comment_id');
-			var update_comment_area = document.getElementsByName('update_comment_area');
-			var story_id = document.getElementsByName('story_id');
-			
-			var value1 = comment_id[0].value;
-			var value2 = update_comment_area[0].value;
-			var value3 = story_id[0].value;
-			console.log(value1);
-			console.log(value2);
-			console.log(value3);
-			location.href = "/update/comment?comment_id="+value1+"&content="+value2+"&story_id="+value3+"%>"
-			
+			update();
 		});
 	});
+
+	function update(){
+		var value1 = $("[name='comment_id']").val();
+		var value2 = $("[name='update_comment_area']").val();
+		var value3 = $("[name='story_id']").val();
+
+		location.href = "/update/comment?comment_id="+value1+"&content="+value2+"&story_id="+value3+"%>";
+	}
 		
 	</script>
 </head>
@@ -206,7 +203,7 @@
 											<div class="show_comment_area"><%=comment.content%></div>
 											<div>
 												<textArea name="update_comment_area"></textArea>
-												<input type = "button" class = "update_confirm_btn" value ="test"/>
+												<input type = "button" class = "update_confirm_btn" value ="확인"/>
 											</div>
 										</td>
 										<td><%=comment.regdate%></td>
