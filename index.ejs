@@ -6,6 +6,7 @@
         <title>Document</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./common.css">
+        <link rel="stylesheet" type="text/css" href="./footer.css">
         <style>
         
         /* 첫 화면에서 보여질 작품 */
@@ -290,7 +291,12 @@
 				});
 				$("#login").submit();
 			});
-		});
+            $('#findbtn').on("click", function(){
+                window.open("/findId", "", "width = 420 height = 250 left = 850 top = 150");
+                
+            });
+        });
+        
 	</script>
 </head>
 <body>
@@ -417,7 +423,7 @@
                     <h1 align="center" style="font-size:25px;margin-bottom:30px;">로그인</h1>
                     <input type="text" placeholder="아이디 입력" name="login_id" required>
                     <input type="password" placeholder="비밀번호 입력" name="login_pass" required>
-                    <a href="/findId">아이디 찾기</a><br>
+                    <input type = "button" id = "findbtn" value = "아이디찾기" onclick = "findId()"><br>
                     <button type="button" id="loginbtn">시작</button>
                 </div>
             </form>
@@ -448,6 +454,8 @@
                 </div>
             </form>
         </div>
+        <br><br><br>
+        <div class="footer" align="center">SIRU's Work copyright.</div>
     </div>
 </body>
 </html>

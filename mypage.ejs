@@ -5,60 +5,124 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>mypage</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="./common.css">
-        <style>
-        
-        #best table th, td {
-            position: relative;
-            text-align: center;
-            padding: 16px;
-        }
-        
-        
-        input[type=text], input[type=password] {
-            width: 100%;
-            padding: 15px;
-            margin: 5px 0 22px 0;
-            display: inline-block;
-            border: none;
-            background: #f1f1f1;
-            border-radius: 5px;
-        }
-        input[type=text]:focus, input[type=password]:focus {
-            background-color: #ddd;
-            outline: none;
+    <style>
+        .footer {
+            width: 80%;
+            padding: 1em;
+            background: #2d2c2e;
+            color: #fbbd0d;
+            font: sans-serif;
+            font-weight: bold;
+            margin: auto;
         }
 
-        button {
-            background-color: #b1850e;
-            color: #faf5e6;
-            padding: 14px 20px;
-            border: none;
-            cursor: pointer;
-            width: 60%;
-            opacity: 0.9;
-            border-radius: 5px;
-        }
-     
-        
-        @media screen and (max-width: 500px){
-            body{
-                font-size: 15px;
-            }
-            #nav #nav_right span{
-                font-size: 12px;
-            }
-           
-            #nav #nav_right .dynamic{
-                display: none;
-            }
-           
-        }
-        #container{
-            position: absolute;
-            
-            margin: 0 auto;
-        }
+    *{
+        box-sizing: border-box;
+        font-family: 'Noto Serif KR', serif;
+        font-weight: lighter;
+    }
+    .yellow{
+        color: #fbbd0d;
+    }
+    body{
+        background-color: #2d2c2e;
+        color: #faf5e6;
+        font-size: 17px;
+    }
+    a{
+        text-decoration: none;
+        color: #faf5e6;
+    }
+    #wrapper{
+        width: 70%;
+        margin: auto;
+    }
+    #siru{
+        padding-left: 70px;
+        font-size: 40px;
+        font-weight: normal;
+        color: #fbbd0d;
+        height: 70px;
+    }
+    #writeBtn{
+        position: fixed;
+        padding: 10px 40px;
+        text-align: center;
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: 50px;
+        font-size: 20px;
+        background-color: black;
+        border: 1px solid black;
+        border-radius: 40px;
+        color: #faf5e6;
+        box-shadow: 0 12px 20px rgb(27, 27, 27);
+        z-index: 1;
+    }
+    #writeBtn:hover{
+        color: #fbbd0d;
+    }
+
+    #nav{
+        position: fixed;
+        overflow: hidden;
+        width: 100%;
+        color: #faf5e6;
+    }
+    #nav img{
+        margin: 10px 0 0 20px;
+        float: left;
+        position: fixed;
+        width: 40px;
+        cursor: pointer;
+    }
+    #nav #nav_right{
+        float: right;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    #nav #nav_right a{
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px 15px;
+        font-size: 15px;
+        border: 1px solid #faf5e6;
+        border-radius: 15px;
+    }
+    #nav #nav_right a:hover{
+        color: #fbbd0d;
+        border: 1px solid #fbbd0d;
+    }
+
+
+    button {
+        background-color: #b1850e;
+        color: #faf5e6;
+        padding: 14px 20px;
+        border: none;
+        cursor: pointer;
+        width: 60%;
+        opacity: 0.9;
+        border-radius: 5px;
+    }
+
+
+    @media screen and (max-width: 500px){
+    body{
+        font-size: 15px;
+    }
+    #nav #nav_right span{
+        font-size: 12px;
+    }
+
+    #nav #nav_right .dynamic{
+        display: none;
+    }
+
+    }
+    #container{
+    margin: 0 auto;
+    }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -67,28 +131,26 @@
     <div id="nav">
         <a href="/index"><img id="logo" src="./image/logo_yellow.png"></a>
         <span id="nav_right">
-            <a href="/board_poem" class="dynamic">��ǰ</a>
-            <a href="/board_story" class="dynamic">��� �̾߱�</a>
-	
+            <a href="/board_poem" class="dynamic">작품</a>
+            <a href="/board_story" class="dynamic">사는 이야기</a>
 			<%if(sessionId == ""){
-				loginStateMsg = "�α���";
+				loginStateMsg = "로그인";
 			}else{
-				loginStateMsg = "�α׾ƿ�";
+				loginStateMsg = "로그아웃";
 			}%>
 			<%if(sessionId == ""){%>
 				<a href="/index#sign"><%=loginStateMsg%></a>
 			<%}else{%>
 				<a href="/index_loggout"><%=loginStateMsg%></a>
 			<%}%>
-
         </span>
     </div>
-    <h1 id="siru">�÷�</h1>
+    <h1 id="siru">시루</h1>
     <div id = "container">
         <form action = "/mypage_update" method = "post">
             <input type = "hidden" name = "member_id" value = <%=userInfo.member_id%>>
             <table border = "1"  align = "center">
-                <caption><h2>����������</h2></caption>
+                <caption><h2>마이페이지</h2></caption>
                 <tr>
                     <th>ID</th>
                     <td><%=userInfo.id%></td>
@@ -105,21 +167,23 @@
                     <td><input type = "text" name = "nickname" value =  <%=userInfo.nickname%>></td>
                 </tr>
                 <tr>
-                    <th>���Գ�¥</th>
+                    <th>등록일자</th>
                     <td><%=userInfo.regdate%></td>
                 </tr>
                 <tr>
                     <td colspan = "2" align = "center">
-                        <input type = "button" value = "Ȯ��" onclick = "history.back()">
-                        <input type = "submit" value = "��������">
+                        <input type = "button" value = "확인" onclick = "history.back()">
+                        <input type = "submit" value = "정보 수정">
                         <%if(sessionId == "admin"){%>
-                            <input type = "button" value = "��� ȸ�� ��������" onclick = "location.href = '/adminpage'">
+                            <input type = "button" value = "모든 회원 목록 보기" onclick = "location.href = '/adminpage'">
                         <%}%>
                     </td>
 
                 </tr>
             </table>
         </form>
+        <br><br><br>
+        <div class="footer" align="center">SIRU's Work copyright.</div>
     </div>
 </body>
 </html>

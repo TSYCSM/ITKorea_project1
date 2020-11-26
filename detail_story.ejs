@@ -7,6 +7,9 @@
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./common.css">
         <style>
+		#wrapper{
+			width: 50%;
+		}
         h2{
             font-weight: normal;
             font-size: 30px;
@@ -18,7 +21,6 @@
         }
         #uid{
             display: block;
-            width: 60%;
             text-align: right;
         }
         input[type="button"]{
@@ -36,6 +38,56 @@
             z-index: 1;
             outline: 0;
         }
+		#btn_wrapper{
+		}
+		.btn{
+			float: right;
+			display: inline-block;
+			border: 1px solid #faf5e6;
+			opacity: 0.7;
+			border-radius: 5px;
+			background-color: transparent;
+			color: #faf5e6;
+			width: 50px;
+			height: 20px;
+		}
+		.btn:hover{
+			opacity: 1;
+		}
+		#table_wrapper{
+			border-radius: 5px;
+			text-align: center;
+		}
+		textArea{
+			width: 95%;
+			height: 95%;
+			background-color: transparent;
+			color: #faf5e6;
+		}
+		tr{
+			height: 60px;
+			padding: 10px;
+		}
+		table tr:nth-child(odd) {
+			background-color: rgb(53, 54, 58);
+        }
+		.regist_btn{
+			background-color: transparent;
+			width: 100%;
+			height: 100%;
+			border: none;
+			color: #faf5e6;
+			font-size: 20px;
+		}
+		.regist_btn:hover{
+			color: #fbbd0d;
+		}
+		.delete_btn{
+			border:1px solid #faf5e6;
+			border-radius:3px;
+			padding:0 4px;
+			display: inline-block;
+		}
         @media screen and (max-width: 1200px){
             #wrapper{
                 width: 80%;
@@ -66,38 +118,14 @@
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="./common.js"></script>
-    <script>
-        var flag = false;
-        $(function(){
-            $(":button").click(function(){
-                if(flag==false){
-                    $(":button").css("background-color","#fbbd0d");
-                    $(":button").css("color","#2d2c2e");
-                    $(":button").css("font-weight","bold");
-                    //공감 수 하나씩 올리기
-                    var newVal = String((parseInt($(":button").val())+1));
-                    $(":button").val(newVal);
-                    flag = true;
-                }else{
-                    $(":button").css("background-color","black");
-                    $(":button").css("color","#faf5e6");
-                    $(":button").css("font-weight","lighter");
-                    //공감 한번 밖에 못올리게 설정
-                }
-            });
-        });
-    </script>
 </head>
 <body>
     <a href="/write" id="writeBtn">글쓰기</a>
-    <input type ="button" value = "<%=story.hit%>"></button>
     <div id="nav">
         <a href="/index"><img id="logo" src="./image/logo_yellow.png"></a>
         <span id="nav_right">
             <a href="/board_poem" class="dynamic">작품</a>
             <a href="/board_story" class="dynamic">사는 이야기</a>
-
 			<%if(sessionId == ""){
 				loginStateMsg = "로그인";
 			}else{
@@ -108,43 +136,41 @@
 			<%}else{%>
 				<a href="/index_loggout"><%=loginStateMsg%></a>
 			<%}%>
-
         </span>
     </div>
     <h1 id="siru">시루</h1>
-        <!-- (3일차) -->
-        <!--  textarea </br>적용하기-->
         <div style="white-space: pre-line" id = "wrapper">
             <h2><%=story.title%></h2>
-            <!-- (1122) -->
             <span id="uid"><%=story.writer%></span>
-            <span id="uid"><%=story.hit%></span>
             <%=story.content%>
-            
-            <button name = "update" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="location.href = '/updateForm_story?story_id=<%=story.story_id%>'">수정</button>
-            <button name = "delete" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="location.href = '/delete_story?story_id=<%=story.story_id%>'">삭제</button>
+            <span id="uid"><img style="width:20px;margin-right:5px;" src="/image/hit_white.png"><%=story.hit%></span>
+            <button class="btn" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="location.href = '/delete_story?story_id=<%=story.story_id%>'">삭제</button>
+            <button class="btn" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="location.href = '/updateForm_story?story_id=<%=story.story_id%>'">수정</button>
                 <div id="comment" style = "margin: auto;">
                     <form action="/regist/comment" method="get">
                         <input type="hidden" name="story_id" value="<%=story.story_id%>"></input>
-                        <table border="1px"  width = "70%">
-                            
-                            <%if(sessionId != ""){%>
-                            <tr>
-                                <td>id</td>
-                                <td><input type="text" name="content"></input></td>
-                                <td><input type="submit"></input></td>
-                            </tr>
-                            <%}%>
-        
-                            <%for(var i = 0; i < commentArray.length; i++){%>
-                                <%var comment = commentArray[i]%>
-                                <tr>
-                                    <td><%=comment.writer%></td>
-                                    <td><%=comment.content%></td>
-                                    <td><%=comment.regdate%></td>
-                                </tr>
-                            <%}%>
-                        </table>
+						<div id="table_wrapper">
+							<table width = "100%">
+								<%if(sessionId != ""){%>
+								<tr>
+									<td><%=sessionId%></td>
+									<td><textArea type="text" name="content"></textArea></td>
+									<td><input class="regist_btn" type="submit" value="등록"></input></td>
+								</tr>
+								<%}%>
+			
+								<%for(var i = 0; i < commentArray.length; i++){%>
+									<%var comment = commentArray[i]%>
+									<tr>
+										<input type="hidden" name="comment_id" value="comment.comment_id"></input>
+										<td><%=comment.writer%></td>
+										<td><%=comment.content%></td>
+										<td><%=comment.regdate%><%if(sessionId == comment.writer){%> <%}%></td>
+										<td style="background-color:transparent;"> <a class="delete_btn" href="/delete/comment?comment_id=<%=comment.comment_id%>&story_id=<%=story.story_id%>">삭제</a> </td>
+									</tr>
+								<%}%>
+							</table>
+						</div>
                     </form>
                 </div>
          </div>

@@ -125,7 +125,7 @@ app.post("/member/regist", function(request, response){
 app.post("/member/login", function(request, response){
 	var id = request.body.login_id;
 	var password = request.body.login_pass;
-	var sql = "SELECT * FROM member WHERE id=? AND password=?";
+	var sql = "SELECT member_id, id, password, email, nickname, date_format(regdate, '%Y-%m-%d-%H:%i') regdate FROM member WHERE id=? AND password=?";
 	con.query(sql, [id, password], function(error, rows, fields){
 		if(error){
 			console.log("failed member login ", error);
@@ -447,7 +447,6 @@ app.get("/detail_story", function(request, response){
 						if(error){
 							console.log("글 상세 ejs 불러오기 실패", error);
 						}else{
-							console.log("row: "+rows);
 							response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
 							response.end(ejs.render(data, {
 								story: record[0]
@@ -478,8 +477,9 @@ app.get("/regist/comment", function(request, response){
 	var sql = "insert into comment(writer, story_id, content) values (?, ?, ?)";
 
 	con.query(sql, [writer, story_id, content], function(error, record, fields){
+		console.log("record: "+record);
 		if(error){
-			console.log("failed to insert comment");
+			console.log("failed to insert comment", error);
 		}else{
 			response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
 			response.end(common.getMsgURL("댓글 입력 성공", "/detail_story?story_id="+story_id));
@@ -487,6 +487,23 @@ app.get("/regist/comment", function(request, response){
 	});
 });
 
+app.get("/delete/comment", function(request, response){
+	var comment_id = request.query.comment_id;
+	var story_id = request.query.story_id;
+
+	console.log("story_id", story_id);
+	console.log("comment_id", comment_id);
+
+	var sql = "delete from comment where comment_id=" + comment_id;
+	con.query(sql, function(error, fields){
+		if(error){
+			console.log("failed to delete comment : " + error);
+		}else{
+			response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
+			response.end(common.getMsgURL("댓글 삭제 성공", "/detail_story?story_id="+story_id));
+		}
+	});
+});
 
 //삭제(4일차)
 app.get("/delete_poem", function(request, response){
