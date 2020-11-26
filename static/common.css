@@ -47,7 +47,7 @@ a{
     color: #fbbd0d;
 }
 
-/* ï¿½Þ´ï¿½ï¿½ï¿½ */
+/* ¸Þ´º¹Ù */
 #nav{
     position: fixed;
     overflow: hidden;
@@ -78,7 +78,6 @@ a{
     color: #fbbd0d;
     border: 1px solid #fbbd0d;
 }
-
 .footer {
     width: 80%;
     padding: 1em;
@@ -87,4 +86,4 @@ a{
     font: sans-serif;
     font-weight: bold;
     margin: auto;
-}
+} 

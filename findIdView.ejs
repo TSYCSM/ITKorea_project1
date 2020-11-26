@@ -5,16 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>findIdView</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
-
-   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 </head>
 <body>
     <h1>아이디 찾기</h1>
     <%if(flag){%>
         찾으시는 아이디는<br>
-		<h2><%=id%>입니다</h2>
+		<h2><%=id%>입니다</h2><br>
     <%}else{%>
         이메일을 잘못 입력했습니다.<br>
 		<input type = "button" value = "뒤로가기" onclick = "history.back()">

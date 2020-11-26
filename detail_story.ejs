@@ -23,7 +23,7 @@
             display: block;
             text-align: right;
         }
-        input[type="button"]{
+        /* input[type="button"]{
             position: fixed;
             padding: 15px 20px;
             text-align: center;
@@ -37,7 +37,7 @@
             box-shadow: 0 12px 20px rgb(27, 27, 27);
             z-index: 1;
             outline: 0;
-        }
+        } */
 		#btn_wrapper{
 		}
 		.btn{
@@ -82,7 +82,7 @@
 		.regist_btn:hover{
 			color: #fbbd0d;
 		}
-		.delete_btn{
+		.delete_comment_button .update_comment_button{
 			border:1px solid #faf5e6;
 			border-radius:3px;
 			padding:0 4px;
@@ -118,6 +118,44 @@
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		var update_flag = false;
+		$(function(){
+
+		$(".update_comment_button").on("click", function(){
+			if(update_flag == true){
+				
+			}else{
+
+			}
+
+			update_flag = !update_flag;
+		});
+
+		$(".submit_comment_btn").on("click", function(){
+			if(update_flag == true){
+				
+			}else{
+
+			}
+		});
+		$(".update_confirm_btn").on("click", function(){
+			var comment_id = document.getElementsByName('comment_id');
+			var update_comment_area = document.getElementsByName('update_comment_area');
+			var story_id = document.getElementsByName('story_id');
+			
+			var value1 = comment_id[0].value;
+			var value2 = update_comment_area[0].value;
+			var value3 = story_id[0].value;
+			console.log(value1);
+			console.log(value2);
+			console.log(value3);
+			location.href = "/update/comment?comment_id="+value1+"&content="+value2+"&story_id="+value3+"%>"
+			
+		});
+	});
+		
+	</script>
 </head>
 <body>
     <a href="/write" id="writeBtn">글쓰기</a>
@@ -148,25 +186,36 @@
             <button class="btn" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="location.href = '/updateForm_story?story_id=<%=story.story_id%>'">수정</button>
                 <div id="comment" style = "margin: auto;">
                     <form action="/regist/comment" method="get">
-                        <input type="hidden" name="story_id" value="<%=story.story_id%>"></input>
+                        <input type="hidden" name ="story_id" value="<%=story.story_id%>"></input>
 						<div id="table_wrapper">
 							<table width = "100%">
 								<%if(sessionId != ""){%>
-								<tr>
-									<td><%=sessionId%></td>
-									<td><textArea type="text" name="content"></textArea></td>
-									<td><input class="regist_btn" type="submit" value="등록"></input></td>
-								</tr>
-								<%}%>
-			
-								<%for(var i = 0; i < commentArray.length; i++){%>
-									<%var comment = commentArray[i]%>
 									<tr>
-										<input type="hidden" name="comment_id" value="comment.comment_id"></input>
+										<td><%=sessionId%></td>
+										<td><textArea type="text" name="content"></textArea></td>
+										<td><input class="regist_btn" type="submit" value="등록"></input></td>
+									</tr>
+									<%}%>
+									
+									<%for(var i = 0; i < commentArray.length; i++){%>
+										<%var comment = commentArray[i]%>
+									<tr>
 										<td><%=comment.writer%></td>
-										<td><%=comment.content%></td>
-										<td><%=comment.regdate%><%if(sessionId == comment.writer){%> <%}%></td>
-										<td style="background-color:transparent;"> <a class="delete_btn" href="/delete/comment?comment_id=<%=comment.comment_id%>&story_id=<%=story.story_id%>">삭제</a> </td>
+										<td>
+											<input type="hidden" name="comment_id" value="<%=comment.comment_id%>"></input>
+											<div class="show_comment_area"><%=comment.content%></div>
+											<div>
+												<textArea name="update_comment_area"></textArea>
+												<input type = "button" class = "update_confirm_btn" value ="test"/>
+											</div>
+										</td>
+										<td><%=comment.regdate%></td>
+										<td style="background-color:transparent;"> 
+											<%if(sessionId == comment.writer){%>
+											<div class="update_comment_button">수정</div>
+											<a class="delete_comment_button" href="/delete/comment?comment_id=<%=comment.comment_id%>&story_id=<%=story.story_id%>">삭제</a> 
+											<%}%>
+											</td>
 									</tr>
 								<%}%>
 							</table>

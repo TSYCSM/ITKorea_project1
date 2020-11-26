@@ -10,9 +10,9 @@ var url = require("url");
 
 let conStr={
     url:"localhost",
-    user:"test1116",
-    password:"1234",
-    database:"test1116"
+    user:"test",
+    password:"test",
+    database:"test"
 };
 
 let con;
@@ -75,7 +75,7 @@ app.post("/member/regist", function(request, response){
 			var n = record.length;
 
 			if(n > 0){
-				//아쉬운 점: ID가 중복되면 아예 모든 정보가 지워진다. 중복검사버튼이 필요
+				
 				response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
 				response.end(common.getMsgURL("ID is duplicated", "/index#sign"));
 			}else{
@@ -125,7 +125,7 @@ app.post("/member/regist", function(request, response){
 app.post("/member/login", function(request, response){
 	var id = request.body.login_id;
 	var password = request.body.login_pass;
-	var sql = "SELECT member_id, id, password, email, nickname, date_format(regdate, '%Y-%m-%d-%H:%i') regdate FROM member WHERE id=? AND password=?";
+	var sql = "SELECT * FROM member WHERE id=? AND password=?";
 	con.query(sql, [id, password], function(error, rows, fields){
 		if(error){
 			console.log("failed member login ", error);
@@ -336,7 +336,7 @@ app.post("/poemdo", function(request, response){
 
 //board_poem에서 등록된 poem 불러오기 (2일차)
 app.get("/board_poem", function(request, response){
-	var sql = "SELECT * from poem order by poem_id desc";
+	var sql = "SELECT * from poem";
 	
 	con.query(sql, function(error, record, fields){
 		if(error){
@@ -408,7 +408,7 @@ app.post("/storydo", function(request, response){
 
 //board_story에서 등록된 story 불러오기 (3일차)
 app.get("/board_story", function(request, response){
-	var sql = "SELECT * from story order by story_id desc";
+	var sql = "SELECT * from story";
 	
 	con.query(sql, function(error, record, fields){
 		if(error){
@@ -440,7 +440,7 @@ app.get("/detail_story", function(request, response){
 			sql = "select * from story where story_id ="+story_id;
 
 			con.query(sql, function(error,record, fields){
-				sql = "select comment_id, story_id, writer, content, date_format(regdate, '%Y-%m-%d-%H:%i') regdate from comment where story_id ="+story_id;
+				sql = "select  story_id, writer, content, date_format(regdate, '%Y-%m-%d-%H:%i') regdate from comment where story_id ="+story_id;
 
 				con.query(sql, function(error, rows, fields){
 					fs.readFile("detail_story.ejs", "utf-8", function(error, data){
@@ -455,10 +455,14 @@ app.get("/detail_story", function(request, response){
 							}));
 						}
 					});
-				});
-			});
+
+				})
+
+
+			})
+
 		}
-	});
+	})
 });
 
 app.get("/regist/comment", function(request, response){
@@ -496,30 +500,11 @@ app.get("/delete/comment", function(request, response){
 			console.log("failed to delete comment : " + error);
 		}else{
 			response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
-			response.end(common.getMsgURL("success to delete comment", "/detail_story?story_id="+story_id));
+			response.end(common.getMsgURL("댓글 삭제 성공", "/detail_story?story_id="+story_id));
 		}
 	});
 });
 
-app.get("/update/comment", function(request, response){
-	var comment_id = request.query.comment_id;
-	var content = request.query.content;
-	var story_id = request.query.story_id;
-
-	console.log("content:", comment_id);
-	console.log("comment_id:", comment_id);
-	console.log("story_id:", story_id);
-
-	var sql = "UPDATE comment SET content=? WHERE comment_id=?";
-	con.query(sql, [content, comment_id], function(error, fields){
-		if(error){
-			console.log("failed to update comment : " + error);
-		}else{
-			response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
-			response.end(common.getMsgURL("success to update comment", "/detail_story?story_id="+story_id));
-		}
-	});
-});
 //삭제(4일차)
 app.get("/delete_poem", function(request, response){
 	var poem_id = request.query.poem_id;
