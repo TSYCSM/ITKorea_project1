@@ -82,11 +82,26 @@
 		.regist_btn:hover{
 			color: #fbbd0d;
 		}
-		.delete_comment_button .update_comment_button{
-			border:1px solid #faf5e6;
-			border-radius:3px;
-			padding:0 4px;
-			display: inline-block;
+		.show_comment_wrapper{
+			position: relative;
+		}
+		.update_comment_button{
+			font-size: 15px;
+			position: absolute;
+			right: 50px;
+			top: 5px;
+		}
+		.update_comment_button:hover{
+			color: #5882FA;
+		}
+		.delete_comment_button{
+			font-size: 15px;
+			position: absolute;
+			right: 10px;
+			top: 5px;
+		}
+		.delete_comment_button:hover{
+			color: #FE642E;
 		}
         @media screen and (max-width: 1200px){
             #wrapper{
@@ -121,37 +136,38 @@
 	<script>
 		var update_flag = false;
 		$(function(){
+			var n = $('.show_comment_wrapper').length;
+			console.log("length : ", n);
 
-		$(".update_comment_button").on("click", function(){
-			if(update_flag == true){
-				
-			}else{
+			$('.show_comment_wrapper').css('display', 'block');
+			$('.update_comment_wrapper').css('display', 'none');					
 
+			for(var i=0; i<n; i++){
+				$(".update_comment_button")[i].on("click", function(){
+					if(update_flag == true){
+						$('.show_comment_wrapper')[i].css('display', 'none');					
+						$('.update_comment_wrapper')[i].css('display', 'block');					
+					}else{
+						$('.show_comment_wrapper')[i].css('display', 'block');
+						$('.update_comment_wrapper')[i].css('display', 'none');					
+					}
+
+					update_flag = !update_flag;
+				});
 			}
-
-			update_flag = !update_flag;
 		});
 
-		$(".submit_comment_btn").on("click", function(){
-			if(update_flag == true){
-				
-			}else{
+		function update(index){
+			var value1 = $('#comment_id_'+index).val();
+			var value2 = $('#update_comment_area_'+index).val();
+			var value3 = $("[name='story_id']").val();
 
-			}
-		});
-	});
+			console.log("value1: ",value1);
+			console.log("value2: ",value2);
+			console.log("value3: ",value3);
 
-	function update(index){
-		var value1 = $('#comment_id_'+index).val();
-		var value2 = $('#update_comment_area_'+index).val();
-		var value3 = $("[name='story_id']").val();
-
-		console.log("value1: ",value1);
-		console.log("value2: ",value2);
-		console.log("value3: ",value3);
-
-		location.href = "/update/comment?comment_id="+value1+"&content="+value2+"&story_id="+value3+"%>";
-	}
+			location.href = "/update/comment?comment_id="+value1+"&content="+value2+"&story_id="+value3+"%>";
+		}
 		
 	</script>
 </head>
@@ -201,19 +217,19 @@
 										<td><%=comment.writer%></td>
 										<td>
 											<input type="hidden" id="comment_id_<%=i%>" value="<%=comment.comment_id%>"></input>
-											<div class="show_comment_area"><%=comment.content%></div>
-											<div>
+											<div class="show_comment_wrapper">
+												<%=comment.content%>
+												<%if(sessionId == comment.writer){%>
+													<div class="update_comment_button">수정</div>
+													<a class="delete_comment_button" href="/delete/comment?comment_id=<%=comment.comment_id%>&story_id=<%=story.story_id%>">삭제</a> 
+												<%}%>
+											</div>
+											<div class="update_comment_wrapper">
 												<textArea id="update_comment_area_<%=i%>"></textArea>
 												<input type = "button" class = "update_confirm_btn" value ="확인" onclick = "update('<%=i%>')"/>
 											</div>
 										</td>
 										<td><%=comment.regdate%></td>
-										<td style="background-color:transparent;"> 
-											<%if(sessionId == comment.writer){%>
-											<div class="update_comment_button">수정</div>
-											<a class="delete_comment_button" href="/delete/comment?comment_id=<%=comment.comment_id%>&story_id=<%=story.story_id%>">삭제</a> 
-											<%}%>
-											</td>
 									</tr>
 								<%}%>
 							</table>
