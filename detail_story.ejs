@@ -139,15 +139,16 @@
 
 			}
 		});
-		$(".update_confirm_btn").on("click", function(){
-			update();
-		});
 	});
 
-	function update(){
-		var value1 = $("[name='comment_id']").val();
-		var value2 = $("[name='update_comment_area']").val();
+	function update(index){
+		var value1 = $('#comment_id_'+index).val();
+		var value2 = $('#update_comment_area_'+index).val();
 		var value3 = $("[name='story_id']").val();
+
+		console.log("value1: ",value1);
+		console.log("value2: ",value2);
+		console.log("value3: ",value3);
 
 		location.href = "/update/comment?comment_id="+value1+"&content="+value2+"&story_id="+value3+"%>";
 	}
@@ -199,11 +200,11 @@
 									<tr>
 										<td><%=comment.writer%></td>
 										<td>
-											<input type="hidden" name="comment_id" value="<%=comment.comment_id%>"></input>
+											<input type="hidden" id="comment_id_<%=i%>" value="<%=comment.comment_id%>"></input>
 											<div class="show_comment_area"><%=comment.content%></div>
 											<div>
-												<textArea name="update_comment_area"></textArea>
-												<input type = "button" class = "update_confirm_btn" value ="확인"/>
+												<textArea id="update_comment_area_<%=i%>"></textArea>
+												<input type = "button" class = "update_confirm_btn" value ="확인" onclick = "update('<%=i%>')"/>
 											</div>
 										</td>
 										<td><%=comment.regdate%></td>
