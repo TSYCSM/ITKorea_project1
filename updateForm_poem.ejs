@@ -5,92 +5,124 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="./common.css">
-        <style>
-
-        /* 글쓰기 영역 */
-        #writeArea{
-            margin: auto;
-            padding-top: 90px;  
-            width: 90%;
-            height: 800px;
-        }
-        #updateBtn{
-            float: right;
-            padding: 10px 30px;
-            margin-bottom: 10px;
+       <style>
+        .footer {
+            width: 80%;
+            padding: 1em;
+            background: #2d2c2e;
             color: #fbbd0d;
-            font-size: 18px;
-            border: 1px solid #fbbd0d;
-            border-radius: 30px;
-            background-color: transparent;
-            outline: 0;
-        }
-        #updateBtn:hover{
-            background-color: #fbbd0d;
-            color: #2d2c2e;
+            font: sans-serif;
             font-weight: bold;
+            margin: auto;
         }
-		input[type="text"]{
-			width: 100%;
-			border: 1px solid #fbbd0d;
-			background-color: transparent;
-			border-radius: 5px 5px 0 0;
-			padding: 15px 50px;
-			font-size: 20px;
-			text-align: center;
-			color: #faf5e6;
-			margin-top: 10px;
-		}
-        textarea{
-            width: 100%;
-            height: 100%;
-            padding: 50px 100px;
-            font-size: 20px;
-            background-color: #2d2c2e;
-            color: #faf5e6;
-            border-radius: 0 0 5px 5px;
-            border: 1px solid #fbbd0d;
-            clear: both;
-        }
-		textarea::placeholder{
-			padding: 0;
-		}
 
-        @media screen and (max-width: 1200px){
-            #wrapper{
-                width: 90%;
-            }
-        }
-        @media screen and (max-width: 500px){
-            body{
-                font-size: 15px;
-            }
-            #siru{
-                display: none;
-            }
-            #wrapper{
-                width: 100%;
-            }
-            #nav #nav_right a.dynamic{
-                display: none;
-            }
-            #updateBtn{
-                padding: 8px 15px;
-                font-size: 13px;
-                background-color: transparent;
-            }
-            #writeArea{
-                height: 550px;
-            }
-			textarea{
-				padding: 50px 30px;
-				font-size: 14px;
-			}
-			input[type=text]{
-				font-size: 16px;
-			}
-        }
+    *{
+        box-sizing: border-box;
+        font-family: 'Noto Serif KR', serif;
+        font-weight: lighter;
+    }
+    .yellow{
+        color: #fbbd0d;
+    }
+    body{
+        background-color: #2d2c2e;
+        color: #faf5e6;
+        font-size: 17px;
+    }
+    a{
+        text-decoration: none;
+        color: #faf5e6;
+    }
+    #wrapper{
+        width: 70%;
+        margin: auto;
+    }
+    #siru{
+        padding-left: 70px;
+        font-size: 40px;
+        font-weight: normal;
+        color: #fbbd0d;
+        height: 70px;
+    }
+    #writeBtn{
+        position: fixed;
+        padding: 10px 40px;
+        text-align: center;
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: 50px;
+        font-size: 20px;
+        background-color: black;
+        border: 1px solid black;
+        border-radius: 40px;
+        color: #faf5e6;
+        box-shadow: 0 12px 20px rgb(27, 27, 27);
+        z-index: 1;
+    }
+    #writeBtn:hover{
+        color: #fbbd0d;
+    }
+
+    #nav{
+        position: fixed;
+        overflow: hidden;
+        width: 100%;
+        color: #faf5e6;
+    }
+    #nav img{
+        margin: 10px 0 0 20px;
+        float: left;
+        position: fixed;
+        width: 40px;
+        cursor: pointer;
+    }
+    #nav #nav_right{
+        float: right;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    #nav #nav_right a{
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px 15px;
+        font-size: 15px;
+        border: 1px solid #faf5e6;
+        border-radius: 15px;
+    }
+    #nav #nav_right a:hover{
+        color: #fbbd0d;
+        border: 1px solid #fbbd0d;
+    }
+
+
+    button {
+        background-color: #b1850e;
+        color: #faf5e6;
+        padding: 14px 20px;
+        border: none;
+        cursor: pointer;
+        width: 60%;
+        opacity: 0.9;
+        border-radius: 5px;
+    }
+
+
+    @media screen and (max-width: 500px){
+    body{
+        font-size: 15px;
+    }
+    #nav #nav_right span{
+        font-size: 12px;
+    }
+
+    #nav #nav_right .dynamic{
+        display: none;
+    }
+
+    }
+    #container{
+    margin: 0 auto;
+    }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./common.js"></script>
@@ -144,6 +176,7 @@
                     누군가에게 묻고 싶은 것들.&#10;남에게 말 못하던 것들.&#10;이 곳에서 털어놓으세요.
                 "><%=poem.content%></textarea>
             </form>
+            <div class="footer" align="center">SIRU's Work copyright.</div>
         </div>
     </div>
 </body>

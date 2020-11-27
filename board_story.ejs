@@ -139,24 +139,34 @@
         <h2 id="board_title">이야기</h2>
         <div id="board">
             <!-- (2일차) -->
-            <% var n = storyArray.length%>
-            <%for(var i = 0; i < storyArray.length; i++){%>
-                <% var story = storyArray[i]%>
-                <a href = "/detail_story?story_id=<%=story.story_id%>">
-					<div class="post" onmouseover="getHighlight(str = 'hit_image<%=i%>')" onmouseout="removeHighlight(str = 'hit_image<%=i%>')">
-						<div class="urow">No.<%=n%></div>
-						<h3><%=story.title%></h3>
-						<div class="hit">
-							<img class="hit_image<%=i%>"  style="width:18px;" src="./image/hit_white.png">
-							<div style="display:inline"><%=story.hit%></div>
-						</div>
-						<div class="uid"><%=story.writer%></div>
-					</div>
-				</a>
-                <%n = n-1%>
+            <%if(storyArray.length != 0){%>
+                <% var n = storyArray.length%>
+                <%for(var i = 0; i < storyArray.length; i++){%>
+                    <% var story = storyArray[i]%>
+                    <a href = "/detail_story?story_id=<%=story.story_id%>">
+                        <div class="post" onmouseover="getHighlight(str = 'hit_image<%=i%>')" onmouseout="removeHighlight(str = 'hit_image<%=i%>')">
+                            <div class="urow">No.<%=n%></div>
+                            <h3><%=story.title%></h3>
+                            <div class="hit">
+                                <img class="hit_image<%=i%>"  style="width:18px;" src="./image/hit_white.png">
+                                <div style="display:inline"><%=story.hit%></div>
+                            </div>
+                            <div class="uid"><%=story.writer%></div>
+                        </div>
+                    </a>
+                    <%n = n-1%>
+                <%}%>
+            <%}else{%>
+                <div style = "margin : auto;">
+                    <br><br><br><br>
+                    <h1 align = "center">게시된 이야기가 없습니다.</h1>
+                </div>
             <%}%>
             <div style="clear:both;height:100px;"></div>
         </div>
+        <br><br><br><br><br><br><br><br>
+        <div class="footer" align="center">SIRU's Work copyright.</div>
+        <br><br><br><br>
     </div>
 </body>
 </html>

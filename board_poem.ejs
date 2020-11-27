@@ -7,6 +7,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./common.css">
         <style>
+
         /* 게시물 */
         #board_title{
             padding: 30px;
@@ -139,24 +140,34 @@
         <h2 id="board_title">作</h2>
         <div id="board">
             <!-- (2일차) -->
-            <% var n = poemArray.length%>
-            <%for(var i = 0; i < poemArray.length; i++){%>
-                <% var poem = poemArray[i]%>
-                <a href = "/detail_poem?poem_id=<%=poem.poem_id%>">
-					<div class="post" onmouseover="getHighlight(str = 'hit_image<%=i%>')" onmouseout="removeHighlight(str = 'hit_image<%=i%>')">
-						<div class="urow">No.<%=n%></div>
-						<h3><%=poem.title%></h3>
-						<div class="hit">
-							<img class="hit_image<%=i%>"  style="width:18px;" src="./image/hit_white.png">
-							<div style="display:inline"><%=poem.hit%></div>
-						</div>
-						<div class="uid"><%=poem.writer%></div>
-					</div>
-				</a>
-                <%n = n-1%>
-            <%}%>
+            <%if(poemArray.length !=0){%>
+                <% var n = poemArray.length%>
+                <%for(var i = 0; i < poemArray.length; i++){%>
+                    <% var poem = poemArray[i]%>
+                    <a href = "/detail_poem?poem_id=<%=poem.poem_id%>">
+                        <div class="post" onmouseover="getHighlight(str = 'hit_image<%=i%>')" onmouseout="removeHighlight(str = 'hit_image<%=i%>')">
+                            <div class="urow">No.<%=n%></div>
+                            <h3><%=poem.title%></h3>
+                            <div class="hit">
+                                <img class="hit_image<%=i%>"  style="width:18px;" src="./image/hit_white.png">
+                                <div style="display:inline"><%=poem.hit%></div>
+                            </div>
+                            <div class="uid"><%=poem.writer%></div>
+                        </div>
+                    </a>
+                    <%n = n-1%>
+                <%}%>
+            <%}else{%>
+                <div style = "margin : auto;">
+                    <br><br><br><br>
+                    <h1 align = "center">게시된 시가 없습니다.</h1>
+                </div>
+            <%}%> 
             <div style="clear:both;height:100px;"></div>
         </div>
+        <br><br><br><br><br><br><br><br>
+        <div class="footer" align="center">SIRU's Work copyright.</div>
+        <br><br><br><br>
     </div>
 </body>
 </html>

@@ -217,7 +217,7 @@ app.post("/mypage_update", function(request, response){
 
 //adminpage (11/24)
 app.get("/adminpage", function(request, response){
-	var sql = "select * from member order by member_id desc";
+	var sql = "SELECT member_id, id, password, email, nickname, date_format(regdate, '%Y-%m-%d-%H:%i') regdate FROM member order by member_id desc";
 
 	con.query(sql, function(error, record, fields){
 		if(error){
