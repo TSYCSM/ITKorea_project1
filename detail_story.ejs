@@ -131,28 +131,30 @@
                 width: 80%;
             }
         }
+		
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script>
-		var update_flag = false;
 		$(function(){
 			var n = $('.show_comment_wrapper').length;
 			console.log("length : ", n);
-			$('.show_comment_wrapper').css('display', 'block');
-			$('.update_comment_wrapper').css('display', 'none');					
-			for(var i=0; i<n; i++){
-				$(".update_comment_button")[i].on("click", function(){
-					if(update_flag == true){
-						$('.show_comment_wrapper')[i].css('display', 'none');					
-						$('.update_comment_wrapper')[i].css('display', 'block');					
-					}else{
-						$('.show_comment_wrapper')[i].css('display', 'block');
-						$('.update_comment_wrapper')[i].css('display', 'none');					
-					}
-					update_flag = !update_flag;
+
+			$('.show_comment_wrapper').each(function(index, item){
+				$(item).css('display', 'block');
+			});
+			$('.update_comment_wrapper').each(function(index, item){
+				$(item).css('display', 'none');
+			});
+
+			$('.update_comment_button').each(function(index, item){
+				$(item).click(function(){
+					console.log(index);
+					$('.show_comment_wrapper')[index].style.display = "none";
+					$('.update_comment_wrapper')[index].style.display = "block";
 				});
-			}
+			});
 		});
+
 		function update(index){
 			var value1 = $('#comment_id_'+index).val();
 			var value2 = $('#update_comment_area_'+index).val();
@@ -185,51 +187,49 @@
         </span>
     </div>
     <h1 id="siru">시루</h1>
-        <div style="white-space: pre-line" id = "wrapper">
-            <h2><%=story.title%></h2>
-            <span id="uid"><%=story.writer%></span>
-            <%=story.content%>
-            <span id="uid"><img style="width:20px;margin-right:5px;" src="/image/hit_white.png"><%=story.hit%></span>
-            <button class="btn" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="location.href = '/delete_story?story_id=<%=story.story_id%>'">삭제</button>
-            <button class="btn" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="location.href = '/updateForm_story?story_id=<%=story.story_id%>'">수정</button>
-                <div id="comment" style = "margin: auto;">
-                    <form action="/regist/comment" method="get">
-                        <input type="hidden" name ="story_id" value="<%=story.story_id%>"></input>
-						<div id="table_wrapper">
-							<table width = "100%">
-								<%if(sessionId != ""){%>
-									<tr>
-										<td><%=sessionId%></td>
-										<td><textArea type="text" name="content"></textArea></td>
-										<td><input class="regist_btn" type="submit" value="등록"></input></td>
-									</tr>
-									<%}%>
-
-									<%for(var i = 0; i < commentArray.length; i++){%>
-										<%var comment = commentArray[i]%>
-									<tr>
-										<td><%=comment.writer%></td>
-										<td>
-											<input type="hidden" id="comment_id_<%=i%>" value="<%=comment.comment_id%>"></input>
-											<div class="show_comment_wrapper">
-												<%=comment.content%>
-												<%if(sessionId == comment.writer){%>
-													<div class="update_comment_button">수정</div>
-													<a class="delete_comment_button" href="/delete/comment?comment_id=<%=comment.comment_id%>&story_id=<%=story.story_id%>">삭제</a> 
-												<%}%>
-											</div>
-											<div class="update_comment_wrapper">
-												<textArea id="update_comment_area_<%=i%>"></textArea>
-												<input type = "button" class = "update_confirm_btn" value ="확인" onclick = "update('<%=i%>')"/>
-											</div>
-										</td>
-										<td><%=comment.regdate%></td>
-									</tr>
+	<div style="white-space: pre-line" id = "wrapper">
+		<h2><%=story.title%></h2>
+		<span id="uid"><%=story.writer%></span>
+		<span id="uid"><img style="width:20px;margin-right:5px;" src="/image/hit_white.png"><%=story.hit%></span>
+		<%=story.content%>
+		<button class="btn" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="location.href = '/delete_story?story_id=<%=story.story_id%>'">삭제</button>
+		<button class="btn" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="location.href = '/updateForm_story?story_id=<%=story.story_id%>'">수정</button>
+		<div id="comment" style = "margin: auto;">
+			<form action="/regist/comment" method="get">
+				<input type="hidden" name ="story_id" value="<%=story.story_id%>"></input>
+				<div id="table_wrapper">
+					<table width = "100%">
+						<%if(sessionId != ""){%>
+							<tr>
+								<td><%=sessionId%></td>
+								<td><textArea type="text" name="content"></textArea></td>
+								<td><input class="regist_btn" type="submit" value="등록"></input></td>
+								</tr>
 								<%}%>
-							</table>
-						</div>
-                    </form>
-                </div>
+
+								<%for(var i = 0; i < commentArray.length; i++){%>
+									<%var comment = commentArray[i]%>
+								<tr>
+									<td><%=comment.writer%></td>
+									<input type="hidden" id="comment_id_<%=i%>" value="<%=comment.comment_id%>"></input>
+									<td>
+										<div class="show_comment_wrapper">
+											<%=comment.content%>
+											<div <%if(sessionId != comment.writer){%>style="display:none"<%}%> class="update_comment_button">수정</div>
+											<a <%if(sessionId != comment.writer){%>style="display:none"<%}%> class="delete_comment_button" href="/delete/comment?comment_id=<%=comment.comment_id%>&story_id=<%=story.story_id%>">삭제</a> 
+										</div>
+										<div class="update_comment_wrapper">
+											<textArea id="update_comment_area_<%=i%>"><%=comment.content%></textArea>
+											<input type = "button" class = "update_confirm_btn" value ="확인" onclick = "update('<%=i%>')"/>
+										</div>
+									</td>
+									<td><%=comment.regdate%></td>
+								</tr>
+							<%}%>
+						</table>
+					</div>
+				</form>
+			</div>
          </div>
 
 </body>

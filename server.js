@@ -46,16 +46,47 @@ app.use(express.urlencoded({
 
 //홈 주소 index로 변경
 app.get("/index", function(request, response){
-	fs.readFile("./index.ejs", "utf-8", function(error, data){
+
+	var sql = "select count(*) as cnt from member";
+
+	con.query(sql, function(error, count, fields){
 		if(error){
-			console.log("index.ejs reading error : ", error);
+			console.log("총 member 수 sql 실패", error);
 		}else{
-			response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
-			response.end(ejs.render(data, {
-				sessionId : userJson.id
-			}));
+			var sql =  "SELECT *, dense_rank() over(order by hit desc) AS ranking FROM poem";
+
+			con.query(sql, function(error, row, fields){
+				if(error){
+					console.log("poem rank() sql문 실패", error);
+				}else{
+					var sql = "SELECT *, dense_rank() over(order by hit desc) AS ranking FROM story";
+				
+					con.query(sql, function(error, record, fields){
+						if(error){
+							console.log("story rank() sql문 실패", error);
+						}else{
+							fs.readFile("./index.ejs", "utf-8", function(error, data){
+								if(error){
+									console.log("index.ejs reading error : ", error);
+								}else{
+									console.log("count", count[0].cnt);
+									response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
+									response.end(ejs.render(data, {
+										sessionId : userJson.id,
+										memberTotal : count[0],
+										poemArray : row,
+										storyArray : record
+									}));
+								}
+							});
+						}
+					})
+				}
+			})
 		}
 	});
+
+
 });
 
 //member/regist : 회원가입 기능 추가 (닉네임 추가)
@@ -137,25 +168,12 @@ app.post("/member/login", function(request, response){
 				userJson = rows[0];
 				console.log(userJson);
 				response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
-				response.end(common.getMsgURL("로그인완료", "/index_loggin"));
+				response.end(common.getMsgURL("로그인완료", "/index"));
 			}
 		}
 	});
 });
 
-//로그인 후 수정된 index_loggin.ejs 페이지로 전환해줌(6일차) 
-app.get("/index_loggin", function(request, response){
-	fs.readFile("./index.ejs", "utf-8", function(error, data){
-		if(error){
-			console.log("index.ejs reading error : ", error);
-		}else{
-			response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
-			response.end(ejs.render(data, {
-				sessionId : userJson.id
-			}));
-		}
-	});
-});
 //로그아웃 index.ejs 페이지로  다시 전환해줌(6일차) 
 app.get("/index_loggout", function(request, response){
 	fs.readFile("./index.ejs", "utf-8", function(error, data){
@@ -164,9 +182,7 @@ app.get("/index_loggout", function(request, response){
 		}else{
 			userJson = emptyJson;
 			response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
-			response.end(ejs.render(data, {
-				sessionId : userJson.id
-			}));
+			response.end(common.getMsgURL("로그아웃", "/index"));
 
 		}
 	});

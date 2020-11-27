@@ -357,45 +357,45 @@
             </div>
         </div>
         <div id="best">
-            <h2>537명의 이야기들.</h2>
+            <h2><%=memberTotal.cnt%>명의 이야기들.</h2>
             <div id="bestPoem">
                 <h3>공감 作</h3><a href="/board_poem" style="float:right">...</a>
                 <table>
-                    <tr>
-                        <td><a href="#">this is..</a><span>User ID</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">this is  of something..</a><span>User ID</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#"> of something..</a><span>User ID</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">this this is title of something..</a><span>User ID</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">this is title of something..</a><span>User ID</span></td>
-                    </tr>
+                    <% var poemNum = 0 %>
+                    <%if (poemArray.length != 0){%>
+                        <%for(var i = 0; i <poemArray.length; i++){%>
+                            <%var poem = poemArray[i]%>
+                            <tr>
+                                <td><a href="/detail_poem?poem_id=<%=poem.poem_id%>"><%=poem.title%></a><span><%=poem.writer%></span></td>
+                            </tr>
+                            <% poemNum = poemNum+1%>
+                            <%if(poemNum>4) break %>
+
+                        <%}%>
+                    <%}else{%>
+                        <br><br><br><br>
+                        <h3>게시된 작품이 없습니다.</h3>
+                    <%}%>
                 </table>
             </div>
             <div id="bestPost">
                 <h3>공감 이야기</h3><a href="/board_story" style="float:right">...</a>
                 <table>
-                    <tr>
-                        <td><a href="#">this is title of something..</a><span>User ID</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">this is title of..</a><span>User ID</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">this is .</a><span>User ID</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">this is title g..</a><span>User ID</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">this is title of something..</a><span>User ID</span></td>
-                    </tr>
+                    <% var storyNum = 0 %>
+                    <%if (storyArray.length != 0){%>
+                        <%for(var i = 0; i <storyArray.length; i++){%>
+                            <%var story = storyArray[i]%>
+                            <tr>
+                                <td><a href="/detail_story?story_id=<%=story.story_id%>"><%=story.title%></a><span><%=story.writer%></span></td>
+                            </tr>
+                            <% storyNum = storyNum+1%>
+                            <%if(storyNum>4) break %>
+
+                        <%}%>
+                    <%}else{%>
+                        <br><br><br><br>
+                        <h3>게시된 이야기가 없습니다.</h3>
+                    <%}%>
                 </table>
             </div>
         </div>
