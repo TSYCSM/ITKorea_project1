@@ -69,7 +69,6 @@ app.get("/index", function(request, response){
 								if(error){
 									console.log("index.ejs reading error : ", error);
 								}else{
-									console.log("count", count[0].cnt);
 									response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
 									response.end(ejs.render(data, {
 										sessionId : userJson.id,
@@ -166,7 +165,6 @@ app.post("/member/login", function(request, response){
 				response.end(common.getMsgURL("로그인실패", "/index#login"));
 			}else{
 				userJson = rows[0];
-				console.log(userJson);
 				response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
 				response.end(common.getMsgURL("로그인완료", "/index"));
 			}
@@ -292,7 +290,6 @@ app.get("/findId", function(request, response){
 
 app.post("/findId_do", function(request, response){
 	var email = request.body.email;
-	console.log("email: "+email);
 
 	var sql = "select * from member where email = '"+email+"'";
 
@@ -304,7 +301,6 @@ app.post("/findId_do", function(request, response){
 				if(error){
 					console.log("findIdView.ejs reading error : ", error);
 				}else{
-					console.log(record[0]);
 					var message;
 					var result = false;
 
@@ -358,8 +354,6 @@ app.get("/board_poem", function(request, response){
 		if(error){
 			console.log("시 목록 불러오기 실패 ", error);
 		}else{
-			
-			console.log("record"+record);
 			fs.readFile("board_poem.ejs", "utf-8", function(error, data){
 				response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
 				response.end(ejs.render(data, {
@@ -375,7 +369,6 @@ app.get("/board_poem", function(request, response){
 app.get("/detail_poem", function(request, response){
 	var poem_id = request.query.poem_id;
 
-	console.log("poem_id : " + poem_id);
 	var sql = "update poem set hit = hit+1 where poem_id = "+poem_id;
 	
 	
@@ -444,11 +437,14 @@ app.get("/board_story", function(request, response){
 //detail_story(목록에서 시 상세보기)으로 가기 (조회수 25)
 app.get("/detail_story", function(request, response){
 	var story_id = request.query.story_id;
+	var flag = Boolean(request.query.flag);
 
-	console.log("story_id : " + story_id);
-	
-	var sql = "update story set hit = hit+1 where story_id = "+story_id;
-	
+	if(flag){
+		var sql = "update story set hit = hit+1 where story_id = "+story_id;
+	}else{
+		var sql = "SELECT 'nothing' FROM DUAL";
+	}
+
 	con.query(sql, function(error, fields){
 		if(error){
 			console.log("글 한 편 조회 실패", error);
@@ -482,14 +478,9 @@ app.get("/regist/comment", function(request, response){
 	var story_id = request.query.story_id;
 	var content = request.query.content; 
 
-	console.log("writer : " + writer);
-	console.log("story_id : " + story_id);
-	console.log("content : " + content);
-
 	var sql = "insert into comment(writer, story_id, content) values (?, ?, ?)";
 
 	con.query(sql, [writer, story_id, content], function(error, record, fields){
-		console.log("record: "+record);
 		if(error){
 			console.log("failed to insert comment", error);
 		}else{
@@ -502,9 +493,6 @@ app.get("/regist/comment", function(request, response){
 app.get("/delete/comment", function(request, response){
 	var comment_id = request.query.comment_id;
 	var story_id = request.query.story_id;
-
-	console.log("story_id", story_id);
-	console.log("comment_id", comment_id);
 
 	var sql = "delete from comment where comment_id=" + comment_id;
 	con.query(sql, function(error, fields){
@@ -521,10 +509,6 @@ app.get("/update/comment", function(request, response){
 	var comment_id = request.query.comment_id;
 	var content = request.query.content;
 	var story_id = request.query.story_id;
-
-	console.log("content:", comment_id);
-	console.log("comment_id:", comment_id);
-	console.log("story_id:", story_id);
 
 	var sql = "UPDATE comment SET content=? WHERE comment_id=?";
 	con.query(sql, [content, comment_id], function(error, fields){

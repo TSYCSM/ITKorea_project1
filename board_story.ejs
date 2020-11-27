@@ -143,7 +143,7 @@
                 <% var n = storyArray.length%>
                 <%for(var i = 0; i < storyArray.length; i++){%>
                     <% var story = storyArray[i]%>
-                    <a href = "/detail_story?story_id=<%=story.story_id%>">
+                    <a href = "/detail_story?story_id=<%=story.story_id%>&flag=updateHit">
                         <div class="post" onmouseover="getHighlight(str = 'hit_image<%=i%>')" onmouseout="removeHighlight(str = 'hit_image<%=i%>')">
                             <div class="urow">No.<%=n%></div>
                             <h3><%=story.title%></h3>

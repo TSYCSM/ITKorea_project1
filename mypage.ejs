@@ -5,7 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>mypage</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./common.css">
     <style>
+		#container{
+			position: absolute;
+			transform: translateX(-50%);
+			left: 50%;
+		}
         .footer {
             width: 80%;
             padding: 1em;
@@ -16,113 +22,110 @@
             margin: auto;
         }
 
-    *{
-        box-sizing: border-box;
-        font-family: 'Noto Serif KR', serif;
-        font-weight: lighter;
-    }
-    .yellow{
-        color: #fbbd0d;
-    }
-    body{
-        background-color: #2d2c2e;
-        color: #faf5e6;
-        font-size: 17px;
-    }
-    a{
-        text-decoration: none;
-        color: #faf5e6;
-    }
-    #wrapper{
-        width: 70%;
-        margin: auto;
-    }
-    #siru{
-        padding-left: 70px;
-        font-size: 40px;
-        font-weight: normal;
-        color: #fbbd0d;
-        height: 70px;
-    }
-    #writeBtn{
-        position: fixed;
-        padding: 10px 40px;
-        text-align: center;
-        transform: translateX(-50%);
-        left: 50%;
-        bottom: 50px;
-        font-size: 20px;
-        background-color: black;
-        border: 1px solid black;
-        border-radius: 40px;
-        color: #faf5e6;
-        box-shadow: 0 12px 20px rgb(27, 27, 27);
-        z-index: 1;
-    }
-    #writeBtn:hover{
-        color: #fbbd0d;
-    }
+		*{
+			box-sizing: border-box;
+			font-family: 'Noto Serif KR', serif;
+			font-weight: lighter;
+		}
+		.yellow{
+			color: #fbbd0d;
+		}
+		body{
+			background-color: #2d2c2e;
+			color: #faf5e6;
+			font-size: 17px;
+		}
+		a{
+			text-decoration: none;
+			color: #faf5e6;
+		}
+		#wrapper{
+			width: 70%;
+			margin: auto;
+		}
+		#siru{
+			padding-left: 70px;
+			font-size: 40px;
+			font-weight: normal;
+			color: #fbbd0d;
+			height: 70px;
+		}
+		#writeBtn{
+			position: fixed;
+			padding: 10px 40px;
+			text-align: center;
+			transform: translateX(-50%);
+			left: 50%;
+			bottom: 50px;
+			font-size: 20px;
+			background-color: black;
+			border: 1px solid black;
+			border-radius: 40px;
+			color: #faf5e6;
+			box-shadow: 0 12px 20px rgb(27, 27, 27);
+			z-index: 1;
+		}
+		#writeBtn:hover{
+			color: #fbbd0d;
+		}
 
-    #nav{
-        position: fixed;
-        overflow: hidden;
-        width: 100%;
-        color: #faf5e6;
-    }
-    #nav img{
-        margin: 10px 0 0 20px;
-        float: left;
-        position: fixed;
-        width: 40px;
-        cursor: pointer;
-    }
-    #nav #nav_right{
-        float: right;
-        margin-top: 10px;
-        font-weight: bold;
-    }
-    #nav #nav_right a{
-        display: inline-block;
-        margin-right: 10px;
-        padding: 5px 15px;
-        font-size: 15px;
-        border: 1px solid #faf5e6;
-        border-radius: 15px;
-    }
-    #nav #nav_right a:hover{
-        color: #fbbd0d;
-        border: 1px solid #fbbd0d;
-    }
-
-
-    button {
-        background-color: #b1850e;
-        color: #faf5e6;
-        padding: 14px 20px;
-        border: none;
-        cursor: pointer;
-        width: 60%;
-        opacity: 0.9;
-        border-radius: 5px;
-    }
+		#nav{
+			position: fixed;
+			overflow: hidden;
+			width: 100%;
+			color: #faf5e6;
+		}
+		#nav img{
+			margin: 10px 0 0 20px;
+			float: left;
+			position: fixed;
+			width: 40px;
+			cursor: pointer;
+		}
+		#nav #nav_right{
+			float: right;
+			margin-top: 10px;
+			font-weight: bold;
+		}
+		#nav #nav_right a{
+			display: inline-block;
+			margin-right: 10px;
+			padding: 5px 15px;
+			font-size: 15px;
+			border: 1px solid #faf5e6;
+			border-radius: 15px;
+		}
+		#nav #nav_right a:hover{
+			color: #fbbd0d;
+			border: 1px solid #fbbd0d;
+		}
 
 
-    @media screen and (max-width: 500px){
-    body{
-        font-size: 15px;
-    }
-    #nav #nav_right span{
-        font-size: 12px;
-    }
+		button {
+			background-color: #b1850e;
+			color: #faf5e6;
+			padding: 14px 20px;
+			border: none;
+			cursor: pointer;
+			width: 60%;
+			opacity: 0.9;
+			border-radius: 5px;
+		}
 
-    #nav #nav_right .dynamic{
-        display: none;
-    }
 
-    }
-    #container{
-    margin: 0 auto;
-    }
+		@media screen and (max-width: 500px){
+		body{
+			font-size: 15px;
+		}
+		#nav #nav_right span{
+			font-size: 12px;
+		}
+
+		#nav #nav_right .dynamic{
+			display: none;
+		}
+
+		}
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
