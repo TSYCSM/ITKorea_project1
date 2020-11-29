@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>mypage</title>
+        <title>my page</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./common.css">
     <style>
@@ -176,7 +176,8 @@
                 <tr>
                     <td colspan = "2" align = "center">
                         <input type = "button" value = "확인" onclick = "history.back()">
-                        <input type = "submit" value = "정보 수정">
+						<input type = "submit" value = "정보 수정">
+						<!-- 로그인 한 유저가 admin이면 모든 회원 목록 보기 버튼을 보여줌 -->
                         <%if(sessionId == "admin"){%>
                             <input type = "button" value = "모든 회원 목록 보기" onclick = "location.href = '/adminpage'">
                         <%}%>

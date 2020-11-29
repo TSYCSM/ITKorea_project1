@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>poem detail</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./common.css">
         <style>
@@ -116,25 +116,13 @@
     <script src="./common.js"></script>
     <script>
         var flag = false;
-        $(function(){
-            $(":button").click(function(){
-                if(flag==false){
-                    $(":button").css("background-color","#fbbd0d");
-                    $(":button").css("color","#2d2c2e");
-                    $(":button").css("font-weight","bold");
-                    //공감 수 하나씩 올리기(후에 데이터베이스에 반영 필요)(오류)
-                    var newVal = String((parseInt($(":button").val())+1));
-                    $(":button").val(newVal);
-                    flag = true;
-                }else{
-                    $(":button").css("background-color","black");
-                    $(":button").css("color","#faf5e6");
-                    $(":button").css("font-weight","lighter");
-                    //공감 한번 밖에 못올리게 설정
-                }
-            });
-        });
-
+     
+        //해당 글을 정말 삭제할지 물어봄
+        function deletePoem(param){
+            if(confirm("정말 삭제하시겠어요?")){
+                location.href = '/delete_poem?poem_id='+param;
+            }
+        }
         
     </script>
 </head>
@@ -165,7 +153,8 @@
         <span id="uid"><%=poem.writer%></span>
 		<span id="uid"><img style="width:20px;margin-right:5px;" src="/image/hit_white.png"><%=poem.hit%></span>
         <%=poem.content%>
-		<button class="btn" <%if(sessionId != poem.writer){%>style="display:none"<%}%> onclick="location.href = '/delete_poem?poem_id=<%=poem.poem_id%>'">삭제</button>
+        <!-- 글 작성자만 해당 글을 삭제, 수정하게끔 함 -->
+		<button class="btn" <%if(sessionId != poem.writer){%>style="display:none"<%}%> onclick="deletePoem('<%=poem.poem_id%>')">삭제</button>
 		<button class="btn" <%if(sessionId != poem.writer){%>style="display:none"<%}%> onclick="location.href = '/updateForm_poem?poem_id=<%=poem.poem_id%>'">수정</button>
     </div>
     <div class="footer" align="center">SIRU's Work copyright.</div>

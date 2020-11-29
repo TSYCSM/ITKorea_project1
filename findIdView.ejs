@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>findIdView</title>
+        <title>find id view</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
         <style>
          body{
@@ -24,10 +24,23 @@
 </head>
 <body>
     <div>
-        <h1 align = "center">아이디 찾기</h1>
-        <%if(flag){%>
+       <h1 align = "center">아이디 찾기</h1>
+
+       <!-- 찾는아이디 xx**** 형태로 출력하기 -->
+       <%if(flag){%>
             찾으시는 아이디는<br>
-            <h2><%=id%>입니다</h2><br>
+        <h2>
+            <%for(var i=0; i<tmpIdArray.length; i++){%>
+                <%var index = tmpIdArray[i].id.length - 2%>
+                <%var tmpId = tmpIdArray[i].id.substring(0, 2)%>
+
+                <%for(var j = 0; j < index; j++){%>
+                    <%tmpId += "*"%>
+                <%}%>
+
+                <%=tmpId%><br>
+            <%}%>입니다
+        </h2>
         <%}else{%>
             이메일을 잘못 입력했습니다.<br>
             <input type = "button" value = "뒤로가기" onclick = "history.back()">

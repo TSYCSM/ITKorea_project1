@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>poem board</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./common.css">
         <style>
@@ -103,11 +103,14 @@
     <script src="./common.js"></script>
 	<script>
         
+        //작품 한건 div에 마우스를 올리면 노란색으로 바꿈
         function  getHighlight(str){
             $('.'+str+'').attr({
 					"src":"./image/hit_yellow.png"
 			});
         }
+
+        //작품 한건 div에서 마우스를 치우면 원래색으로 바꿈
         function removeHighlight(str){
             $('.'+str+'').attr({
 					"src":"./image/hit_white.png"
@@ -139,12 +142,12 @@
     <div id="wrapper">
         <h2 id="board_title">作</h2>
         <div id="board">
-            <!-- (2일차) -->
             <%if(poemArray.length !=0){%>
                 <% var n = poemArray.length%>
                 <%for(var i = 0; i < poemArray.length; i++){%>
                     <% var poem = poemArray[i]%>
                     <a href = "/detail_poem?poem_id=<%=poem.poem_id%>">
+                        <!-- 작품 한 건을 div한 개 씩에 담아둠  -->
                         <div class="post" onmouseover="getHighlight(str = 'hit_image<%=i%>')" onmouseout="removeHighlight(str = 'hit_image<%=i%>')">
                             <div class="urow">No.<%=n%></div>
                             <h3><%=poem.title%></h3>

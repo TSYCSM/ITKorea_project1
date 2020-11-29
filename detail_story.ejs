@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>story detail</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./common.css">
         <style>
@@ -57,6 +57,7 @@
 		#table_wrapper{
 			border-radius: 5px;
 			text-align: center;
+			line-height: 20px;
 		}
 		textArea{
 			width: 95%;
@@ -83,6 +84,8 @@
 			color: #fbbd0d;
 		}
 		.show_comment_wrapper{
+			padding-left: 40px;
+			text-align: left;
 			position: relative;
 		}
 		.update_comment_button{
@@ -155,6 +158,20 @@
 			});
 		});
 
+		//해당 글을 정말 삭제할지 물어봄
+		function deleteStory(param){
+            if(confirm("정말 삭제하시겠어요?")){
+                location.href = '/delete_story?story_id='+param;
+            }
+		}
+		
+		//해당 댓글을 정말 삭제할지 물어봄
+		function deleteComment(param1, param2){
+            if(confirm("정말 삭제하시겠어요?")){
+				location.href = "/delete/comment?comment_id="+param1+"&story_id="+param2;
+            }
+        }
+
 		function update(index){
 			var value1 = $('#comment_id_'+index).val();
 			var value2 = $('#update_comment_area_'+index).val();
@@ -192,7 +209,8 @@
 		<span id="uid"><%=story.writer%></span>
 		<span id="uid"><img style="width:20px;margin-right:5px;" src="/image/hit_white.png"><%=story.hit%></span>
 		<%=story.content%>
-		<button class="btn" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="location.href = '/delete_story?story_id=<%=story.story_id%>'">삭제</button>
+		<!-- 글 작성자만 해당 수정, 삭제 하게끔 함 -->
+		<button class="btn" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="deleteStory('<%=story.story_id%>')">삭제</button>
 		<button class="btn" <%if(sessionId != story.writer){%>style="display:none"<%}%> onclick="location.href = '/updateForm_story?story_id=<%=story.story_id%>'">수정</button>
 		<div id="comment" style = "margin: auto;">
 			<form action="/regist/comment" method="get">
@@ -213,14 +231,15 @@
 									<td><%=comment.writer%></td>
 									<input type="hidden" id="comment_id_<%=i%>" value="<%=comment.comment_id%>"></input>
 									<td>
-										<div class="show_comment_wrapper">
-											<%=comment.content%>
-											<div <%if(sessionId != comment.writer){%>style="display:none"<%}%> class="update_comment_button">수정</div>
-											<a <%if(sessionId != comment.writer){%>style="display:none"<%}%> class="delete_comment_button" href="/delete/comment?comment_id=<%=comment.comment_id%>&story_id=<%=story.story_id%>">삭제</a> 
-										</div>
 										<div class="update_comment_wrapper">
 											<textArea id="update_comment_area_<%=i%>"><%=comment.content%></textArea>
 											<input type = "button" class = "update_confirm_btn" value ="확인" onclick = "update('<%=i%>')"/>
+										</div>
+										<div class="show_comment_wrapper">
+											<%=comment.content%>
+											<!-- 댓글 작성자만 해당 댓글 삭제, 수정 하게끔함 -->
+											<div <%if(sessionId != comment.writer){%>style="display:none"<%}%> class="update_comment_button">수정</div>
+											<a <%if(sessionId != comment.writer){%>style="display:none"<%}%> class="delete_comment_button" onclick="deleteComment('<%=comment.comment_id%>', '<%=story.story_id%>')">삭제</a> 
 										</div>
 									</td>
 									<td><%=comment.regdate%></td>

@@ -8,6 +8,7 @@ var mysql = require("mysql");
 var app = express();
 var url = require("url"); 
 
+//DB연동
 let conStr={
     url:"localhost",
     user:"test1116",
@@ -17,6 +18,7 @@ let conStr={
 
 let con;
 
+//로그인 할때 select되는 record값을 json에 넣어 세션 인증
 var userJson= {
 	member_id: 0,
 	id: "",
@@ -25,6 +27,7 @@ var userJson= {
 	regdate: ""
 };
 
+//로그아웃 할때 userJson을 emptyJson으로 바꿔줌
 var emptyJson= {
 	member_id: 0,
 	id: "",
@@ -38,8 +41,11 @@ function connect(){
 	console.log("connected...");
 }
 
+//static 파일담은 경로 지정
 app.use(static(__dirname + "/static"));
 
+//parsing할때 nested 형태로 extend함
+//ex) { person: { name: cw } } 형태로 파싱 가능
 app.use(express.urlencoded({
 	extended: true,
 }));
@@ -47,19 +53,19 @@ app.use(express.urlencoded({
 //홈 주소 index로 변경
 app.get("/index", function(request, response){
 
-	var sql = "select count(*) as cnt from member";
+	var sql = "select count(*) as cnt from member";//cnt 명의 이야기
 
 	con.query(sql, function(error, count, fields){
 		if(error){
 			console.log("총 member 수 sql 실패", error);
 		}else{
-			var sql =  "SELECT *, dense_rank() over(order by hit desc) AS ranking FROM poem";
+			var sql =  "SELECT *, dense_rank() over(order by hit desc) AS ranking FROM poem";//조회수로 상위 5위 poem 게시
 
 			con.query(sql, function(error, row, fields){
 				if(error){
 					console.log("poem rank() sql문 실패", error);
 				}else{
-					var sql = "SELECT *, dense_rank() over(order by hit desc) AS ranking FROM story";
+					var sql = "SELECT *, dense_rank() over(order by hit desc) AS ranking FROM story";////조회수로 상위 5위 story 게시
 				
 					con.query(sql, function(error, record, fields){
 						if(error){
@@ -71,7 +77,7 @@ app.get("/index", function(request, response){
 								}else{
 									response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
 									response.end(ejs.render(data, {
-										sessionId : userJson.id,
+										sessionId : userJson.id,//네비게이션 우측의 버튼을 (로그인/로그아웃)상태를 나타낼 data
 										memberTotal : count[0],
 										poemArray : row,
 										storyArray : record
@@ -97,7 +103,7 @@ app.post("/member/regist", function(request, response){
 	var email = request.body.regist_email + "@" + request.body.regist_emailAdd;
 	var genre_id = request.body.genre_id;
 	
-	var sql = "select * from member where id = '" + id + "'";
+	var sql = "select * from member where id = '" + id + "'";//아이디 중복 체크
 	con.query(sql, function(error, record, fields){
 		if(error){
 			console.log("ID double check error : ", error);
@@ -107,16 +113,16 @@ app.post("/member/regist", function(request, response){
 			if(n > 0){
 				//아쉬운 점: ID가 중복되면 아예 모든 정보가 지워진다. 중복검사버튼이 필요
 				response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
-				response.end(common.getMsgURL("ID is duplicated", "/index#sign"));
+				response.end(common.getMsgURL("ID is duplicated", "/index#sign"));//중복되면 index#sign부분으로 전환
 			}else{
-				sql = "INSERT INTO member (id, password, email, nickname) VALUES (?, ?, ?, ?)";
+				sql = "INSERT INTO member (id, password, email, nickname) VALUES (?, ?, ?, ?)";//중복이 아니면 insert로 회원등록
 				con.query(sql, [id, password, email, nickname], function(error, fields){
 					if(error){
 						console.log("failed member regist ", error);
 					}else{
-						sql="select last_insert_id() as member_id";
-			
+						sql="select last_insert_id() as member_id";//마지막으로 등록된 사람의 pk가져오기
 						con.query(sql, function(error, record, fields){
+				
 							if(error){
 								console.log("pk가져오기 실패", error);
 							}else{
@@ -124,6 +130,7 @@ app.post("/member/regist", function(request, response){
 								
 								for(var i = 0; i<genre_id.length; i++){
 									var n = 0;
+									//member의 pk와 장르번호를 member_genre에 insert -> member_id에 genre를 넣으면 중복되는 값이 많아 테이블을 분할하여 따로 저장
 									sql="insert into member_genre(member_id, genre_id) values("+member_id+" , "+genre_id[i]+")"; 
 									//쿼리 실행
 									con.query(sql, function(err){
@@ -172,7 +179,7 @@ app.post("/member/login", function(request, response){
 	});
 });
 
-//로그아웃 index.ejs 페이지로  다시 전환해줌(6일차) 
+//로그아웃 index.ejs 페이지로  다시 전환해줌
 app.get("/index_loggout", function(request, response){
 	fs.readFile("./index.ejs", "utf-8", function(error, data){
 		if(error){
@@ -229,7 +236,7 @@ app.post("/mypage_update", function(request, response){
 	}
 });
 
-//adminpage (11/24)
+//모든 회원 정보를 볼 수 있는 adminpage
 app.get("/adminpage", function(request, response){
 	var sql = "SELECT member_id, id, password, email, nickname, date_format(regdate, '%Y-%m-%d-%H:%i') regdate FROM member order by member_id desc";
 
@@ -253,6 +260,7 @@ app.get("/adminpage", function(request, response){
 	});
 });
 
+//작품, 이야기 글 쓰기 폼
 app.get("/write", function(request, response){
 	fs.readFile("./writeForm.ejs", "utf-8", function(error, data){
 		if(error){
@@ -272,7 +280,7 @@ app.get("/write", function(request, response){
 	});
 });
 
-//아이디찾기
+//아이디찾기 폼
 app.get("/findId", function(request, response){
 	fs.readFile("./findId.ejs", "utf-8", function(error, data){
 		if(error){
@@ -288,6 +296,7 @@ app.get("/findId", function(request, response){
 	});
 });
 
+//아이디 찾기 로직
 app.post("/findId_do", function(request, response){
 	var email = request.body.email;
 
@@ -301,24 +310,17 @@ app.post("/findId_do", function(request, response){
 				if(error){
 					console.log("findIdView.ejs reading error : ", error);
 				}else{
-					var message;
 					var result = false;
-
+					console.log("record", record);
 					if(record[0] != null){
 						result = true;
-						var index = record[0].id.length - 2;
-						var tmpId = record[0].id.substring(0, 2); // 0번문자 ~ 2번 전까지
 						
-						for(var i = 0; i < index; i++){
-							tmpId += "*";
-						
-						}
 					}
 					response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
 					response.end(ejs.render(data, {
 						sessionId : userJson.id,
 						userInfo : userJson,
-						id : tmpId,
+						tmpIdArray : record,
 						flag : result
 					}));
 				}
@@ -328,7 +330,7 @@ app.post("/findId_do", function(request, response){
 
 });
 
-//글쓰기 후 board_poem가기 (2일차)
+//글쓰기 후 board_poem가기
 app.post("/poemdo", function(request, response){
 	var title = request.body.title;
 	var writer = userJson.id;
@@ -346,7 +348,7 @@ app.post("/poemdo", function(request, response){
 	});
 });
 
-//board_poem에서 등록된 poem 불러오기 (2일차)
+//board_poem에서 등록된 poem 불러오기
 app.get("/board_poem", function(request, response){
 	var sql = "SELECT * from poem order by poem_id desc";
 	
@@ -365,18 +367,18 @@ app.get("/board_poem", function(request, response){
 	});
 });
 
-//detail_poem(목록에서 시 상세보기)으로 가기 (조회수 25)
+//detail_poem(목록에서 시 상세보기)으로 가기
 app.get("/detail_poem", function(request, response){
 	var poem_id = request.query.poem_id;
 
-	var sql = "update poem set hit = hit+1 where poem_id = "+poem_id;
+	var sql = "update poem set hit = hit+1 where poem_id = "+poem_id;//1)조회수 올리고
 	
 	
 	con.query(sql, function(error, fields){
 		if(error){
 			console.log("조회수 올리기 실패", error);
 		}else{
-			sql = "select * from poem where poem_id ="+poem_id;
+			sql = "select * from poem where poem_id ="+poem_id;//2)작품 한건 페이지에 불러오기
 			
 			con.query(sql, function(error, record, fields){
 				fs.readFile("detail_poem.ejs", "utf-8", function(error ,data){
@@ -434,24 +436,27 @@ app.get("/board_story", function(request, response){
 	});
 });
 
-//detail_story(목록에서 시 상세보기)으로 가기 (조회수 25)
+//detail_story(목록에서 시 상세보기)으로 가기
 app.get("/detail_story", function(request, response){
 	var story_id = request.query.story_id;
-	var flag = Boolean(request.query.flag);
+	var flag = Boolean(request.query.flag);//상세보기 or 댓글(입력/수정/삭제)인지 구분
+															//if 상세보기 -> flag = true, 조회수++
+															//if 댓글 -> flag = false, 조회수는 그대로	
 
 	if(flag){
-		var sql = "update story set hit = hit+1 where story_id = "+story_id;
+		var sql = "update story set hit = hit+1 where story_id = "+story_id;//1)조회수++
 	}else{
-		var sql = "SELECT 'nothing' FROM DUAL";
+		var sql = "SELECT 'nothing' FROM DUAL";//1)의미없는 dummy query
 	}
 
 	con.query(sql, function(error, fields){
 		if(error){
 			console.log("글 한 편 조회 실패", error);
 		}else{
-			sql = "select * from story where story_id ="+story_id;
+			sql = "select * from story where story_id ="+story_id;//2)글 한건 목록 페이지에 불러오기
 
 			con.query(sql, function(error,record, fields){
+				//3)댓글 목록 페이지에 불러오기
 				sql = "select comment_id, story_id, writer, content, date_format(regdate, '%Y-%m-%d-%H:%i') regdate from comment where story_id ="+story_id;
 
 				con.query(sql, function(error, rows, fields){
@@ -473,23 +478,25 @@ app.get("/detail_story", function(request, response){
 	});
 });
 
+//댓글 등록
 app.get("/regist/comment", function(request, response){
 	var writer = userJson.id;
 	var story_id = request.query.story_id;
 	var content = request.query.content; 
 
-	var sql = "insert into comment(writer, story_id, content) values (?, ?, ?)";
+	var sql = "insert into comment(writer, story_id, content) values (?, ?, ?)";//상세글 번호에 따라 댓글 가져오기(글 한건마다 해당 댓글 여러개 가져오기)
 
 	con.query(sql, [writer, story_id, content], function(error, record, fields){
 		if(error){
 			console.log("failed to insert comment", error);
 		}else{
 			response.writeHead(200, {"Content-Type":"text/html;charset=utf-8"});
-			response.end(common.getMsgURL("댓글 입력 성공", "/detail_story?story_id="+story_id));
+			response.end(common.getMsgURL("댓글 입력 성공", "/detail_story?story_id="+story_id));//다시 페이지 갱신
 		}
 	});
 });
 
+//댓글 삭제
 app.get("/delete/comment", function(request, response){
 	var comment_id = request.query.comment_id;
 	var story_id = request.query.story_id;
@@ -505,6 +512,7 @@ app.get("/delete/comment", function(request, response){
 	});
 });
 
+//댓글 수정
 app.get("/update/comment", function(request, response){
 	var comment_id = request.query.comment_id;
 	var content = request.query.content;
@@ -520,7 +528,8 @@ app.get("/update/comment", function(request, response){
 		}
 	});
 });
-//삭제(4일차)
+
+//작품 삭제
 app.get("/delete_poem", function(request, response){
 	var poem_id = request.query.poem_id;
 	
@@ -540,7 +549,7 @@ app.get("/delete_poem", function(request, response){
 	})
 });
 
-//수정폼으로 이동(4일차)
+//작품 수정폼
 app.get("/updateForm_poem", function(request, response){
 	var poem_id = request.query.poem_id;
 	
@@ -565,7 +574,7 @@ app.get("/updateForm_poem", function(request, response){
 	})
 });
 
-//수정후 시 목록으로...(4일차) -> 파라미터 값이 null로 옴...(오류)
+//작품 수정
 app.get("/update_poem", function(request, response){
 	var poem_id = parseInt(request.query.poem_id);
 	var title = request.query.title;
@@ -588,7 +597,7 @@ app.get("/update_poem", function(request, response){
 	})
 });
 
-//삭제(4일차)
+//이야기 삭제
 app.get("/delete_story", function(request, response){
 	var story_id = request.query.story_id;
 	
@@ -608,7 +617,7 @@ app.get("/delete_story", function(request, response){
 	})
 });
 
-//수정폼으로 이동(4일차)
+//이야기 수정폼
 app.get("/updateForm_story", function(request, response){
 	var story_id = request.query.story_id;
 	
@@ -633,7 +642,7 @@ app.get("/updateForm_story", function(request, response){
 	})
 });
 
-//수정후 글 목록으로...(4일차)
+//이야기 수정
 app.get("/update_story", function(request, response){
 	var story_id = parseInt(request.query.story_id);
 	var title = request.query.title;

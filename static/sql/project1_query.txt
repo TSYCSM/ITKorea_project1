@@ -21,7 +21,7 @@ drop table story;
 drop table genre;
 drop table member_genre;
 drop table member;
-
+drop table comment;
 
 
 ----table 생성----
@@ -32,7 +32,7 @@ create table poem(
 	,writer varchar(20)
 	,content varchar(1000)
 	,regdate DATETIME DEFAULT   CURRENT_TIMESTAMP
-);
+) charset = utf8;
 create table story(
 	story_id int primary key auto_increment
 	,hit int default 0
@@ -40,7 +40,7 @@ create table story(
 	,writer varchar(20)
 	,content varchar(1000)
 	,regdate DATETIME DEFAULT   CURRENT_TIMESTAMP
-);
+) charset = utf8;
 create table genre(
 	genre_id int primary key auto_increment
 	, name varchar(20)
@@ -49,7 +49,7 @@ create table member_genre(
 	member_genre_id int primary key auto_increment
 	,member_id int
 	,genre_id int
-);
+) charset = utf8;
 CREATE TABLE member(
    member_id INT AUTO_INCREMENT PRIMARY KEY
    , id VARCHAR(20)
@@ -58,12 +58,12 @@ CREATE TABLE member(
    , nickname varchar(20)
    , regdate DATETIME DEFAULT CURRENT_TIMESTAMP
    , hit INT DEFAULT 0
-);
+) charset = utf8;
 create table comment(
 	comment_id int auto_increment primary key
 	,story_id int not null
 	,content varchar(1000) not null
 	,writer varchar(20) not null
 	,regdate datetime default current_timestamp
-);
+) charset = utf8;
 

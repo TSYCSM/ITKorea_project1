@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>siru</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./common.css">
         <style>
@@ -255,7 +255,8 @@
 		//script영역은 전부 새로 추가한 것임
 		//회원가입과 로그인 기능 추가
 		$(function(){
-         
+            
+            //회원가입폼에 text를 쓰지 않으면 alert창을 띄움
 			$("#registbtn").on("click", function(){
 				var regist_id = $('input[name=regist_id]');
 				var regist_pass = $('input[name=regist_pass]');
@@ -283,6 +284,7 @@
 					alert("비밀번호는 6자 이상 입력해주세요");
 					regist_password.focus();
 				}else{
+                    //선호하는 장르를 최소 1개 이상 선택하게끔 함
                     var n=0;
                     for(var i=0;i<$("input[name='genre_id']").length;i++){
                         var ch=$("input[name='genre_id']")[i]; 
@@ -292,7 +294,7 @@
                     }
                     if(n<1){
                         alert("적어도 1개이상 장르를 체크해주세요");
-                        return;
+                        return;//선택을 1개도 안할 시 sumit 전에 return시켜버림 
                     }
 					$("#regist").attr({
 						"method":"post",
@@ -320,7 +322,8 @@
         <span id="nav_right">
             <a href="/board_poem" class="dynamic">작품</a>
             <a href="/board_story" class="dynamic">사는 이야기</a>
-			
+            
+            <!-- navigation 바에 로그인 상태를 나타냄 -->
 			<%if(sessionId == ""){
 				loginStateMsg = "로그인";
 			}else{
@@ -357,10 +360,12 @@
             </div>
         </div>
         <div id="best">
+            <!-- 총 회원 수 출력 -->
             <h2><%=memberTotal.cnt%>명의 이야기들.</h2>
             <div id="bestPoem">
                 <h3>공감 作</h3><a href="/board_poem" style="float:right">...</a>
                 <table>
+                    <!-- 조회수 top 5 작품 게시 -->
                     <% var poemNum = 0 %>
                     <%if (poemArray.length != 0){%>
                         <%for(var i = 0; i <poemArray.length; i++){%>
@@ -369,11 +374,12 @@
                                 <td><a href="/detail_poem?poem_id=<%=poem.poem_id%>"><%=poem.title%></a><span><%=poem.writer%></span></td>
                             </tr>
                             <% poemNum = poemNum+1%>
-                            <%if(poemNum>4) break %>
+                            <%if(poemNum>=5) break %>
 
                         <%}%>
                     <%}else{%>
                         <br><br><br><br>
+                        <!-- 글이 없으면... -->
                         <h3>게시된 작품이 없습니다.</h3>
                     <%}%>
                 </table>
@@ -381,6 +387,7 @@
             <div id="bestPost">
                 <h3>공감 이야기</h3><a href="/board_story" style="float:right">...</a>
                 <table>
+                    <!-- 조회수 top 5 이야기 게시 -->
                     <% var storyNum = 0 %>
                     <%if (storyArray.length != 0){%>
                         <%for(var i = 0; i <storyArray.length; i++){%>
@@ -389,11 +396,12 @@
                                 <td><a href="/detail_story?story_id=<%=story.story_id%>"><%=story.title%></a><span><%=story.writer%></span></td>
                             </tr>
                             <% storyNum = storyNum+1%>
-                            <%if(storyNum>4) break %>
+                            <%if(storyNum>=5) break %>
 
                         <%}%>
                     <%}else{%>
                         <br><br><br><br>
+                        <!-- 글이 없으면... -->
                         <h3>게시된 이야기가 없습니다.</h3>
                     <%}%>
                 </table>
@@ -430,7 +438,7 @@
                 </p>
             </div>
         </div>
-        <!--sign부분의 id 식별자를 바꿈(구별을 위해)-->
+        <!--로그인 상태면 로그인/회원가입 폼을 안보이게 해줌-->
         <div id="sign" <%if(sessionId == ""){%>style="display:block;"<%}else{%>style="display:none";<%}%>>
             <h3>시작하세요.</h3>
             <form id="login">
