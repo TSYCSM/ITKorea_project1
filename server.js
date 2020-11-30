@@ -8,15 +8,18 @@ var mysql = require("mysql");
 var app = express();
 var url = require("url"); 
 
+let con;
+
+
+
 //DB연동
 let conStr={
     url:"localhost",
-    user:"test1116",
-    password:"1234",
-    database:"test1116"
+    user:"test",
+    password:"test",
+    database:"test"
 };
 
-let con;
 
 //로그인 할때 select되는 record값을 json에 넣어 세션 인증
 var userJson= {
